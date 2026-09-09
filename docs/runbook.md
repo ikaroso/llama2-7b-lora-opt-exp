@@ -29,19 +29,18 @@ python -m pip freeze > environment.lock.txt
 
 ## 1. 编译 llama.cpp
 
-本机尚未确认 CUDA Toolkit 可用。先运行 `nvcc --version`；找不到时需安装与 MSVC 兼容的 CUDA Toolkit（含 VS 集成）。nvidia-smi 显示的 CUDA 版本只是驱动能力，不是 Toolkit。先检查主机内存和磁盘，建议 RAM 32GB、空闲磁盘 60GB 起。
+专用 Conda 环境已安装 CUDA Toolkit 12.9 和 Ninja。激活后运行 `nvcc --version`。下面的脚本会先激活环境，再明确初始化本机 VS 2022，以 Ninja 编译；无需系统级 CUDA 安装或 VS CUDA 集成。先检查主机内存和磁盘，建议 RAM 32GB、空闲磁盘 60GB 起。
 
 ```powershell
 git -C llama.cpp rev-parse HEAD
 nvcc --version
-cmake -S llama.cpp -B llama.cpp/build -G "Visual Studio 17 2022" -A x64 -DGGML_CUDA=ON
-cmake --build llama.cpp/build --config Release -j 4 --target llama-server llama-completion llama-quantize llama-bench llama-perplexity
+cmd /c scripts\build_cuda.cmd
 ```
 
-若暂时只跑 CPU 流程，把配置命令的 `-DGGML_CUDA=ON` 改为 OFF，其余一致。已有其他生成器缓存时使用新的 build 目录，不能混用 MinGW/MSVC 缓存。
+仅检查配置而不完整编译时使用 `cmd /c scripts\build_cuda.cmd configure`。脚本固定本机 RTX 4060 的 CUDA 架构 89，产物目录 build-cuda；与旧的 Visual Studio build 目录分开。Conda 附带的 VS 2017 探测可能输出提示，脚本随后显式使用 VS 2022。
 
 ```powershell
-$bin = Join-Path $PWD 'llama.cpp/build/bin/Release'
+$bin = Join-Path $PWD 'llama.cpp/build-cuda/bin'
 $env:LLAMA_ARG_FIT = 'off'
 & "$bin/llama-completion.exe" --help
 & "$bin/llama-bench.exe" --help

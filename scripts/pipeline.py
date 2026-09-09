@@ -26,8 +26,8 @@ def run(argv, dry=False, cwd=ROOT):
 
 def binary(name):
     suffix = '.exe' if os.name == 'nt' else ''
-    candidates = [SRC / 'build/bin/Release' / (name + suffix), SRC / 'build/bin' / (name + suffix)]
-    return next((p for p in candidates if p.exists()), candidates[0 if os.name == 'nt' else 1])
+    candidates = [SRC / 'build-cuda/bin' / (name + suffix), SRC / 'build/bin/Release' / (name + suffix), SRC / 'build/bin' / (name + suffix)]
+    return next((p for p in candidates if p.exists()), candidates[0 if os.name == 'nt' else 2])
 
 
 def server_command(c, precision, spec):
@@ -66,6 +66,9 @@ def main():
         if not dry:
             commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=SRC, text=True).strip()
             LOCK.write_text(json.dumps({'repository': 'https://github.com/ggml-org/llama.cpp', 'commit': commit}, indent=2) + '\n')
+        if os.name == 'nt' and c['backend'] == 'cuda':
+            run(['cmd.exe', '/c', ROOT / 'scripts/build_cuda.cmd'], dry)
+            return
         generator = ['-G', 'Visual Studio 17 2022', '-A', 'x64'] if os.name == 'nt' else []
         run(['cmake', '-S', SRC, '-B', SRC / 'build', *generator, '-DCMAKE_BUILD_TYPE=Release',
              '-DGGML_CUDA=' + ('ON' if c['backend'] == 'cuda' else 'OFF')], dry)

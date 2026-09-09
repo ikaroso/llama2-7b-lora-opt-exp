@@ -4,7 +4,9 @@
 
 已创建 Conda `llama2-7b`，位于 `E:\Software\Anaconda\envs\llama2-7b`。已验证 Python 3.11、torch 2.11.0+cpu、transformers 4.57.6、peft 0.18.0；pip check 通过。随机小型 Llama 的 CPU BF16 前向、非零 LoRA 合并、safetensors 保存与重新加载检查通过。实际转换器 --help 已运行。
 
-项目源码路径已改为 `llama.cpp`，锁定 `b31b71f3a076bfc4278daad442203a9c51c6e676`；构建目标包含 server、completion、quantize、bench、perplexity。完整命令见 [运行手册](runbook.md)。实际 7B 下载/合并/转换/推理未执行，CUDA Toolkit 尚未检测到。下面及决策记录中的旧环境状态作为历史快照保留。
+项目源码路径已改为 `llama.cpp`，锁定 `b31b71f3a076bfc4278daad442203a9c51c6e676`；构建目标包含 server、completion、quantize、bench、perplexity。完整命令见 [运行手册](runbook.md)。实际 7B 下载/合并/转换/推理未执行。下面及决策记录中的旧环境状态作为历史快照保留。
+
+专用 Conda 环境已安装 CUDA Toolkit 12.9.2（nvcc 12.9.86）及 Ninja 1.13.2。`nvcc --version`、pip check 通过；`scripts/build_cuda.cmd configure` 已使用 VS2022 MSVC 19.44 完成 CUDA 编译器 ABI 检查和 CMake 配置，目标架构为 RTX 4060 的 89。完整 llama.cpp 构建尚未执行。构建脚本在 Conda 激活后显式加载 VS2022，产物目录为 `llama.cpp/build-cuda/bin`。Conda 包精确版本记录在 `conda-win64.lock.txt`（不包含 pip 包，pip 版本另见 `environment.lock.txt`）。
 
 以下为首次建项快照。2026-09-09 后续已确定模型与 LoRA，并完成 PowerShell 7 用户级 Python 修复；最新环境、选型和待验收状态见 [决策记录](decision-2026-09-09.md)。
 

@@ -1,7 +1,10 @@
 name: llama2-7b
 channels:
+  - nvidia
   - defaults
 dependencies:
   - python=3.11
   - pip
+  - cuda-toolkit=12.9
+  - ninja
 # Install CPU torch and requirements-merge.txt next; see docs/runbook.md.
