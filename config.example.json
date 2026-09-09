@@ -1,0 +1,18 @@
+{
+  "base_model": "models/base",
+  "adapter": "models/lora",
+  "tokenizer": "models/base",
+  "merged_model": "models/merged-bf16",
+  "bf16_gguf": "artifacts/llama2-7b-lora-bf16.gguf",
+  "q4_gguf": "artifacts/llama2-7b-lora-q4_k_m.gguf",
+  "draft_gguf": "",
+  "llama_ref": "master",
+  "backend": "cpu",
+  "gpu_layers": 0,
+  "draft_gpu_layers": 0,
+  "context": 2048,
+  "threads": 8,
+  "port": 8080,
+  "flash_attention": "off",
+  "draft_tokens": 5
+}

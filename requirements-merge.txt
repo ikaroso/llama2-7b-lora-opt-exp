@@ -1,0 +1,8 @@
+# Install an appropriate CPU/CUDA torch build first. Freeze the resolved environment per run.
+torch>=2.6,<3
+transformers>=4.45,<5
+peft>=0.14,<1
+accelerate>=1,<2
+safetensors>=0.4,<1
+sentencepiece>=0.2,<1
+protobuf>=4,<7
