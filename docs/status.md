@@ -1,4 +1,29 @@
-# 初始落地状态
+# 项目进度
+
+## 当前实测进度（2026-09-09）
+
+已存在底座、LoRA、合并后 BF16 checkpoint（config 标注 bfloat16），以及 BF16/Q4_K_M GGUF。CUDA 构建已可执行，bench 记录的源码版本为 b31b71f3a。此次按已有产物和日志核验，没有重新执行下载、合并或全文件哈希检查；镜像与官方权重逐字节一致性仍未证明。
+
+| 产物 | 文件字节数 |
+| --- | ---: |
+| artifacts/llama2-7b-lora-bf16.gguf | 13478105216 |
+| artifacts/llama2-7b-lora-q4_k_m.gguf | 4081004672 |
+
+Q4 文件约缩小 70%。下表为 llama-bench 的 5 次平均吞吐（token/s），固定 p512、n128、t8、b128、ub128。
+
+| 配置 | pp512 | tg128 | 日志前缀（results/ 下） |
+| --- | ---: | ---: | --- |
+| BF16，ngl=0，FA off | 97.262 | 4.754 | bf16-bench |
+| Q4_K_M，ngl=0，FA off | 222.289 | 13.440 | q4-bench |
+| Q4_K_M，ngl=99，FA on | 2421.095 | 55.086 | q4-cuda-bench-13745-2315 |
+
+三组 bench 的 meta.json 均记录 exit_code=0。BF16/Q4 的 ngl=0 生成吞吐比约 2.83；Q4 CUDA+FA 相对 Q4 ngl=0 约 4.10，后者包含后端和 FA 变化，不算纯量化收益。ngl=0 记录仍允许默认 KV/操作卸载，不将它宣称为严格禁用所有 GPU 运算的实验。
+
+冒烟日志 bf16-smoke、q4-smoke、q4-cuda-smoke-13745-2315 均有 exit_code=0。中文可读，但二分查找解释不够准确，128 token 上限造成截断，尚不构成质量验收。旧 q4-cuda-bench 没有完成元数据，不纳入结果。
+
+WikiText-2 raw 测试文本已存在（1290590 字节），语料哈希记录为 results/ppl-corpus-sha256-13745-2315.txt。尚未发现 BF16/Q4 PPL 完成结果或投机解码结果。下一步完成 PPL，再执行 [投机解码方案](speculative-plan.md)。runbook 已统一 CMD，协作约定见根目录 AGENTS.md。
+
+以下均为早期历史快照，其中“尚未执行”不代表当前状态。
 
 ## ModelScope 下载源更新
 

@@ -31,13 +31,14 @@ def binary(name):
 
 
 def server_command(c, precision, spec):
+    spec = 'draft-simple' if spec == 'draft' else spec
     cmd = [binary('llama-server'), '-m', path(c[precision + '_gguf']),
            '--host', '127.0.0.1', '--port', c['port'], '-c', c['context'],
            '-t', c['threads'], '-ngl', c['gpu_layers'], '-np', 1,
            '-fa', c['flash_attention']]
     if spec != 'none':
         cmd += ['--spec-type', spec, '--spec-draft-n-max', c['draft_tokens']]
-    if spec == 'draft':
+    if spec == 'draft-simple':
         if not c['draft_gguf']:
             raise ValueError('draft_gguf must identify a compatible, locally verified draft GGUF.')
         cmd += ['-md', path(c['draft_gguf']), '-ngld', c['draft_gpu_layers']]
@@ -50,7 +51,7 @@ def main():
     p.add_argument('--config', default='config.local.json')
     p.add_argument('--dry-run', action='store_true')
     p.add_argument('--precision', choices=['bf16', 'q4'], default='q4')
-    p.add_argument('--spec', choices=['none', 'ngram-simple', 'draft'], default='none')
+    p.add_argument('--spec', choices=['none', 'ngram-simple', 'ngram-map-k', 'draft-simple', 'draft'], default='none')
     a = p.parse_args()
     c = json.loads(path(a.config).read_text(encoding='utf-8-sig'))
     dry = a.dry_run
@@ -91,7 +92,7 @@ def main():
     else:
         cmd = server_command(c, a.precision, a.spec)
         if not dry:
-            for item in [path(c[a.precision + '_gguf'])] + ([path(c['draft_gguf'])] if a.spec == 'draft' else []):
+            for item in [path(c[a.precision + '_gguf'])] + ([path(c['draft_gguf'])] if a.spec in ('draft', 'draft-simple') else []):
                 if not item.is_file():
                     raise FileNotFoundError(item)
             help_text = subprocess.check_output([str(binary('llama-server')), '--help'], text=True, errors='replace')

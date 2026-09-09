@@ -8,7 +8,7 @@ GitHub 项目：llama2-7b-lora-opt-exp — Record how to optimize the inference 
 
 目标：将指定 LoRA 与其原始 Llama 2 7B 基座合并为 BF16，使用 llama.cpp 部署，并比较 Q4、投机解码与二者组合。
 
-当前交付是可执行工程框架；尚未提供模型，也尚未执行真实合并、量化或推理。设计与验收见 [docs/design.md](docs/design.md)，环境状态见 [docs/status.md](docs/status.md)。
+当前已有 BF16/Q4 产物，三组冒烟和 bench 有成功记录；PPL 与投机实验待完成。实测数据见 [进度记录](docs/status.md)，下一阶段见 [投机解码方案](docs/speculative-plan.md)。
 
 ## 1. 配置环境
 
@@ -44,8 +44,8 @@ python scripts/pipeline.py serve --precision q4 --spec none
 python scripts/pipeline.py serve --precision bf16 --spec ngram-simple
 python scripts/pipeline.py serve --precision q4 --spec ngram-simple
 # 需要先配置兼容的 draft_gguf
-python scripts/pipeline.py serve --precision bf16 --spec draft
-python scripts/pipeline.py serve --precision q4 --spec draft
+python scripts/pipeline.py serve --precision bf16 --spec draft-simple
+python scripts/pipeline.py serve --precision q4 --spec draft-simple
 
 python scripts/benchmark.py --label q4-none --output results/q4-none.jsonl
 ```
