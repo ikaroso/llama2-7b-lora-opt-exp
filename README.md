@@ -1,8 +1,10 @@
 # llama2-7b 本地推理与加速实验
 
+GitHub 项目：llama2-7b-lora-opt-exp — Record how to optimize the inference of llama2-7b model with merged lora.
+
 完整执行顺序与可复制命令见 **[全套运行手册](docs/runbook.md)**：编译 → 下载 → 合并 → BF16 测试/bench → Q4 测试/bench → PPL 对比。
 
-当前已定：官方 `meta-llama/Llama-2-7b-hf` Base + `iamshnoo/alpaca-2-7b-chinese`，CPU 合并 BF16，再本地 Q4_K_M。固定版本、资源预算和待验收项见 [决策记录](docs/decision-2026-09-09.md)。
+当前已定：Llama 2 7B Base 的 `modelscope/Llama-2-7b-ms` 镜像 + `iamshnoo/alpaca-2-7b-chinese`，CPU 合并 BF16，再本地 Q4_K_M。镜像配置和 tokenizer 已核对；与官方权重逐字节一致性及真实合并尚未验证。最新下载说明见运行手册，环境与验收进度见 [状态记录](docs/status.md)。
 
 目标：将指定 LoRA 与其原始 Llama 2 7B 基座合并为 BF16，使用 llama.cpp 部署，并比较 Q4、投机解码与二者组合。
 
@@ -53,3 +55,5 @@ label 必须与实际运行配置一致；每组输出使用新文件名。接�
 gpu_layers 默认 0。CUDA 环境下先将 Q4 设置为 16 层，根据空闲显存调整；全量卸载使用 99 并核对日志，32 不一定包含输出层。BF16 从较少层数开始。每次调整保存配置与对应结果。Flash Attention 单独作为变量比较。
 
 所有 stage 均支持 --dry-run（不执行命令）；无需本地配置时附加 --config config.example.json。模型、构建文件、本地配置和实验结果不入 Git。不会自动下载模型或访问 Hugging Face 私有仓库。
+
+仓库代码采用 MIT 许可（见 LICENSE）；模型权重和 LoRA 分别遵守各自上游许可证。
