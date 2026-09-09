@@ -1,5 +1,7 @@
 # llama2-7b 本地推理与加速实验
 
+当前已定：官方 `meta-llama/Llama-2-7b-hf` Base + `iamshnoo/alpaca-2-7b-chinese`，CPU 合并 BF16，再本地 Q4_K_M。固定版本、资源预算和待验收项见 [决策记录](docs/decision-2026-09-09.md)。
+
 目标：将指定 LoRA 与其原始 Llama 2 7B 基座合并为 BF16，使用 llama.cpp 部署，并比较 Q4、投机解码与二者组合。
 
 当前交付是可执行工程框架；尚未提供模型，也尚未执行真实合并、量化或推理。设计与验收见 [docs/design.md](docs/design.md)，环境状态见 [docs/status.md](docs/status.md)。
@@ -9,7 +11,7 @@
 以下命令在本项目根目录执行，适用于 PowerShell。Python 3.11+、Git、CMake 和 C++ 编译器为前提。Windows CUDA 构建还需要受支持的 CUDA Toolkit 和 Visual Studio C++ 工具链；nvidia-smi 的 CUDA 版本不表示已安装 Toolkit。
 
 ```powershell
-python -m venv .venv
+& 'C:\Users\ikaro\AppData\Local\Programs\Python\Python313\python.exe' -m venv .venv
 .\.venv\Scripts\Activate.ps1
 Copy-Item config.example.json config.local.json
 python -m pip install -r requirements-merge.txt

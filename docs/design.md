@@ -1,5 +1,7 @@
 # 设计与实验规范
 
+当前执行选型以 [2026-09-09 决策记录](decision-2026-09-09.md) 为准：官方 Base + 中文 Alpaca LoRA，先完成本地 Q4，再进行投机加速实验。
+
 ## 数据流与边界
 
 准确基座 + PEFT LoRA + 训练 tokenizer → CPU 合并 BF16 HF → BF16 GGUF → Q4_K_M GGUF → llama-server → 固定请求集 → JSONL。
