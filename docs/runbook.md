@@ -53,14 +53,15 @@ $env:LLAMA_ARG_FIT = 'off'
 
 ## 2. 下载基座和 LoRA
 
-先在 [官方模型页面](https://huggingface.co/meta-llama/Llama-2-7b-hf) 获得访问权限，再在本地交互登录；不要把 Token 写入脚本或 Git。
+基座改从 [ModelScope 组织仓库](https://modelscope.cn/models/modelscope/Llama-2-7b-ms) 下载，LoRA 仍从 Hugging Face 的公开仓库下载。遵守仓库附带的 Llama 2 许可；不再需要 Hugging Face 官方基座的访问申请。
 
 ```powershell
-hf auth login
 python scripts/download_models.py
 ```
 
-脚本只下载官方 Base 的 safetensors 权重、JSON 与 tokenizer.model，避免同时下载重复的 bin 权重；LoRA 固定为 iamshnoo/alpaca-2-7b-chinese 的 `48951161ce47ed33d8bde26d4302d7bca8ef21e2`。首次解析基座 commit 后写入 models/sources.json，重试沿用该提交，下载完成记录 SHA256。不要把 Chat 权重混入 models/base。
+脚本按 modelscope.lock.json 中每个文件的固定提交及 SHA256 下载约 13.48 GB safetensors 权重和必要配置，避免重复 bin 权重。排除魔搭额外的 added_tokens.json 和 tokenizer.json，以 tokenizer.model 加载的词表已验证为 32000。LoRA 固定为 iamshnoo/alpaca-2-7b-chinese 的 `48951161ce47ed33d8bde26d4302d7bca8ef21e2`。下载后写入 models/sources.json；重试会跳过已校验完整的文件，未完成的单个文件会重新下载。已有其他来源的 sources.json 或多余基座文件时会报错，请将旧文件移到备份目录后重试，不要混用。
+
+已核对架构及 tokenizer；官方 HF 接口隐藏权重哈希，尚未证明镜像权重与官方逐字节相同，也尚未完成真实 7B 合并验证。
 
 ## 3. 合并 BF16，重新加载，再转 GGUF
 
@@ -73,7 +74,7 @@ $bf16 = Join-Path $PWD 'artifacts/llama2-7b-lora-bf16.gguf'
 $q4 = Join-Path $PWD 'artifacts/llama2-7b-lora-q4_k_m.gguf'
 ```
 
-重新加载进程结束后会释放内存，再进行下一步。合并输出已存在时脚本会拒绝覆盖；中断后改用新的输出目录并核对配置。下载清单是来源记录，不能防止人为替换模型文件，正式实验前应核对保存的哈希。
+重新加载进程结束后会释放内存，再进行下一步。合并输出已存在时脚本会拒绝覆盖；中断后改用新的输出目录并核对配置。合并前会重新核对基座文件与 Git 中锁定的 SHA256，读取约 13.48 GB 文件需要一些时间。
 
 ## 4. BF16 冒烟测试
 

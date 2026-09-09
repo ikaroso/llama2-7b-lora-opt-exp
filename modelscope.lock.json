@@ -1,0 +1,59 @@
+{
+  "files": [
+    {
+      "Name": "config.json",
+      "Sha256": "3c66a81e29ce617a74ff2e4055e7fb275b5c9457103864745693fbce59b368a2",
+      "Size": 583,
+      "Revision": "7f7b51a94a1c99268af38d279a7e39adf3cc3939"
+    },
+    {
+      "Name": "LICENSE.txt",
+      "Sha256": "8c17c2ebb0ea011be9981cc3922db8ca8fa61e828c5d3f44cb6ae342bf80460b",
+      "Size": 7020,
+      "Revision": "7f7b51a94a1c99268af38d279a7e39adf3cc3939"
+    },
+    {
+      "Name": "model-00001-of-00002.safetensors",
+      "Sha256": "4ec71fd53e99766de38f24753b30c9e8942630e9e576a1ba27b0ec531e87be41",
+      "Size": 9976578928,
+      "Revision": "7f7b51a94a1c99268af38d279a7e39adf3cc3939"
+    },
+    {
+      "Name": "model-00002-of-00002.safetensors",
+      "Sha256": "41780b5dac322ac35598737e99208d90bdc632a1ba3389ebedbb46a1d8385a7f",
+      "Size": 3500297344,
+      "Revision": "7f7b51a94a1c99268af38d279a7e39adf3cc3939"
+    },
+    {
+      "Name": "model.safetensors.index.json",
+      "Sha256": "217d527037a95cd5cd30384afb425987824373b94cc7206beb48ec0c9499c98f",
+      "Size": 26788,
+      "Revision": "7f7b51a94a1c99268af38d279a7e39adf3cc3939"
+    },
+    {
+      "Name": "special_tokens_map.json",
+      "Sha256": "2ea88203b955648951a454e73a73967ff77ba4e79ae8ceb4400d4ab2cb040777",
+      "Size": 435,
+      "Revision": "7f7b51a94a1c99268af38d279a7e39adf3cc3939"
+    },
+    {
+      "Name": "tokenizer.model",
+      "Sha256": "9e556afd44213b6bd1be2b850ebbbd98f5481437a8021afaf58ee7fb1818d347",
+      "Size": 499723,
+      "Revision": "7f7b51a94a1c99268af38d279a7e39adf3cc3939"
+    },
+    {
+      "Name": "tokenizer_config.json",
+      "Sha256": "37951d5a1e0c6a77f88c61f79972f17e889b62258aadff4c61eacd3fb567fe72",
+      "Size": 746,
+      "Revision": "7f7b51a94a1c99268af38d279a7e39adf3cc3939"
+    },
+    {
+      "Name": "USE_POLICY.md",
+      "Sha256": "7c23fb36d80141c4ab8cdbb61ee4790102ebd2bf7aeff414453177d4f2110e5d",
+      "Size": 4766,
+      "Revision": "7f7b51a94a1c99268af38d279a7e39adf3cc3939"
+    }
+  ],
+  "repo": "modelscope/Llama-2-7b-ms"
+}

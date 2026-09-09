@@ -1,5 +1,9 @@
 # 初始落地状态
 
+## ModelScope 下载源更新
+
+官方 HF 基座申请被拒，下载入口已切换到 modelscope/Llama-2-7b-ms，保留 iamshnoo/alpaca-2-7b-chinese LoRA。modelscope.lock.json 固定文件提交、大小和哈希；合并前重新校验基座哈希。实测排除 added_tokens.json 后 tokenizer 词表为 32000，配置为 LlamaForCausalLM、4096 hidden、32 layers。只下载了小型配置和 tokenizer 进行验证，完整权重下载、真实合并和推理尚未执行。官方接口隐藏权重哈希，未证明镜像与官方逐字节一致。后续命令见 runbook.md 第 2 节。
+
 ## 最新更新：专用环境与执行手册
 
 已创建 Conda `llama2-7b`，位于 `E:\Software\Anaconda\envs\llama2-7b`。已验证 Python 3.11、torch 2.11.0+cpu、transformers 4.57.6、peft 0.18.0；pip check 通过。随机小型 Llama 的 CPU BF16 前向、非零 LoRA 合并、safetensors 保存与重新加载检查通过。实际转换器 --help 已运行。

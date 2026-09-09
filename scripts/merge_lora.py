@@ -1,6 +1,7 @@
 """Merge a local PEFT adapter into its exact local Llama 2 base, on CPU."""
 import argparse
 import json
+import hashlib
 from pathlib import Path
 
 
@@ -19,8 +20,18 @@ def main():
     if not manifest_path.is_file():
         p.error('Run scripts/download_models.py first to record selected base provenance.')
     manifest = json.loads(manifest_path.read_text())
-    if manifest['base']['repo'] != 'meta-llama/Llama-2-7b-hf' or not manifest['base'].get('sha256'):
-        p.error('Expected completed official Base download manifest.')
+    if manifest['base']['repo'] != 'modelscope/Llama-2-7b-ms' or not manifest['base'].get('sha256'):
+        p.error('Expected completed ModelScope Base download manifest.')
+    lock = json.loads((Path(__file__).resolve().parents[1] / 'modelscope.lock.json').read_text(encoding='utf-8-sig'))
+    allowed = {entry['Name'] for entry in lock['files']}
+    if any(f.is_file() and f.name not in allowed for f in Path(args.base).iterdir()):
+        p.error('Unexpected files in base directory; use only the locked download files.')
+    for entry in lock['files']:
+        with (Path(args.base) / entry['Name']).open('rb') as stream:
+            if hashlib.file_digest(stream, 'sha256').hexdigest() != entry['Sha256']:
+                p.error('Base checksum mismatch: ' + entry['Name'])
+    if Path(args.tokenizer).resolve() != Path(args.base).resolve():
+        p.error('Use the verified base tokenizer directory.')
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
     from peft import PeftModel
