@@ -1,0 +1,6 @@
+Below is an instruction that describes a task. Write a response that appropriately completes the request.
+
+### Instruction:
+请用中文解释什么是二分查找，并举一个简单例子。
+
+### Response:

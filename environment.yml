@@ -1,0 +1,7 @@
+name: llama2-7b
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+# Install CPU torch and requirements-merge.txt next; see docs/runbook.md.

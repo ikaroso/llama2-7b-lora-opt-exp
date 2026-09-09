@@ -1,5 +1,7 @@
 .venv/
 vendor/
+llama.cpp/
+data/
 models/
 artifacts/
 results/

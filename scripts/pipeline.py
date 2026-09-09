@@ -8,7 +8,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / 'vendor/llama.cpp'
+SRC = ROOT / 'llama.cpp'
 LOCK = ROOT / 'llama.lock.json'
 
 
@@ -66,10 +66,11 @@ def main():
         if not dry:
             commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=SRC, text=True).strip()
             LOCK.write_text(json.dumps({'repository': 'https://github.com/ggml-org/llama.cpp', 'commit': commit}, indent=2) + '\n')
-        run(['cmake', '-S', SRC, '-B', SRC / 'build', '-DCMAKE_BUILD_TYPE=Release',
+        generator = ['-G', 'Visual Studio 17 2022', '-A', 'x64'] if os.name == 'nt' else []
+        run(['cmake', '-S', SRC, '-B', SRC / 'build', *generator, '-DCMAKE_BUILD_TYPE=Release',
              '-DGGML_CUDA=' + ('ON' if c['backend'] == 'cuda' else 'OFF')], dry)
         run(['cmake', '--build', SRC / 'build', '--config', 'Release', '-j', '4',
-             '--target', 'llama-server', 'llama-quantize', 'llama-bench'], dry)
+             '--target', 'llama-server', 'llama-quantize', 'llama-bench', 'llama-completion', 'llama-perplexity'], dry)
     elif a.stage == 'merge':
         run([sys.executable, ROOT / 'scripts/merge_lora.py', '--base', path(c['base_model']),
              '--adapter', path(c['adapter']), '--tokenizer', path(c['tokenizer']),

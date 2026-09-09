@@ -1,5 +1,6 @@
 """Merge a local PEFT adapter into its exact local Llama 2 base, on CPU."""
 import argparse
+import json
 from pathlib import Path
 
 
@@ -11,6 +12,15 @@ def main():
     out = Path(args.output)
     if out.exists():
         p.error('Output already exists; use a new directory to avoid partial overwrite.')
+    adapter_config = json.loads((Path(args.adapter) / 'adapter_config.json').read_text())
+    if adapter_config.get('base_model_name_or_path') != 'meta-llama/Llama-2-7b-hf':
+        p.error('This workflow requires an adapter explicitly targeting official Llama-2-7b-hf Base.')
+    manifest_path = Path(args.base).parent / 'sources.json'
+    if not manifest_path.is_file():
+        p.error('Run scripts/download_models.py first to record selected base provenance.')
+    manifest = json.loads(manifest_path.read_text())
+    if manifest['base']['repo'] != 'meta-llama/Llama-2-7b-hf' or not manifest['base'].get('sha256'):
+        p.error('Expected completed official Base download manifest.')
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
     from peft import PeftModel
