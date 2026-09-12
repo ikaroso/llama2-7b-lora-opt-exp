@@ -1,5 +1,13 @@
 # 项目进度
 
+## 优化完成（2026-09-12）
+
+已完成统一 512/256 的初筛及五轮确认，详见 [完整实验报告](optimization-20260912.md)。原模型与本地配置保留。五轮真实中文问题结果（每轮三条，非空文本流式 TTFT）：基准 prefill 2037.51 token/s、decode 45.53 token/s、TTFT 398.67 ms；batch512 为 2168.42 / 45.27 / 376.72；TinyLlama draft3 为 1703.67 / 66.63 / 453.32。
+
+draft3 提高生成吞吐但增加首字延迟。n-gram 及其组合已实测，部分输出与基准不一致，暂不宣称无损默认优化。batch 的收益较小，bench prefill 波动较大；重复输出、忽略 EOS、三问题样本规模及温度漂移限制均已记录。MTP 和专门草稿头方法缺少适配前置条件，没有虚构实测。PPL/正式准确率仍未完成，本轮未用性能结果代替质量验收。
+
+新增 config.cuda-latency.json、config.cuda-draft.json 两个可选配置及测量/汇总脚本，bench 下保存可提交的逐轮结果和哈希索引。优化前 Git 标签为 baseline-before-optimization-20260912。
+
 ## 当前实测进度（2026-09-09）
 
 已存在底座、LoRA、合并后 BF16 checkpoint（config 标注 bfloat16），以及 BF16/Q4_K_M GGUF。CUDA 构建已可执行，bench 记录的源码版本为 b31b71f3a。此次按已有产物和日志核验，没有重新执行下载、合并或全文件哈希检查；镜像与官方权重逐字节一致性仍未证明。

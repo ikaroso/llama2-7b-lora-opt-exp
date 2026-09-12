@@ -1,0 +1,22 @@
+{
+  "artifacts/llama2-7b-lora-bf16.gguf": {
+    "bytes": 13478105216,
+    "sha256": "cf9a64c028e7184cc2351232942e45e72d579aa61728e81fa9e1e84b8be06ec2"
+  },
+  "artifacts/llama2-7b-lora-q4_k_m.gguf": {
+    "bytes": 4081004672,
+    "sha256": "4670ec2a4af25f9e074c1e55c7fd24458166eba74726902fd0f46629d12b66d8"
+  },
+  "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf": {
+    "bytes": 668788096,
+    "sha256": "9fecc3b3cd76bba89d504f29b616eedf7da85b96540e490ca5824d3f7d2776a0"
+  },
+  "data/cmrc2018_dev.json": {
+    "bytes": 3541681,
+    "sha256": "5cfe4414c28a8ecbb51670f78c0dc7d1049f286c2d5769b52f1f94bcc0752cf1"
+  },
+  "data/wikitext-2-raw/wiki.test.raw": {
+    "bytes": 1290590,
+    "sha256": "173c87a53759e0201f33e0ccf978e510c2042d7f2cb78229d9a50d79b9e7dd08"
+  }
+}

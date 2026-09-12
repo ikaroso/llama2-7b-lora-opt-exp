@@ -36,6 +36,9 @@ def server_command(c, precision, spec):
            '--host', '127.0.0.1', '--port', c['port'], '-c', c['context'],
            '-t', c['threads'], '-ngl', c['gpu_layers'], '-np', 1,
            '-fa', c['flash_attention']]
+    for key, flag in [('batch', '-b'), ('ubatch', '-ub')]:
+        if key in c:
+            cmd += [flag, c[key]]
     if spec != 'none':
         cmd += ['--spec-type', spec, '--spec-draft-n-max', c['draft_tokens']]
     if spec == 'draft-simple':

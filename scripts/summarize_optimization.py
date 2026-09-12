@@ -7,6 +7,12 @@ import statistics
 import re
 
 
+def output_text(row):
+    # Partial events omit byte tokens buffered for an incomplete UTF-8 character.
+    # Compare returned text; these events cannot prove token-ID identity.
+    return ''.join(e['data'].get('content', '') for e in row['events'])
+
+
 def describe(values):
     values = sorted(values)
     return dict(n=len(values), mean=statistics.mean(values), median=statistics.median(values),
@@ -30,13 +36,13 @@ def main():
             round_id=match.group(1) if match else ''
             for line in refpath.read_text(encoding='utf-8').splitlines():
                 row=json.loads(line)
-                references[(round_id,row['prompt'])] = [t for e in row['events'] if not e['data'].get('stop') for t in e['data'].get('tokens', [])]
+                references[(round_id,row['prompt'])] = output_text(row)
         for refpath in root.glob('batch512*.samples.jsonl'):
             m=re.search(r'-r(\d+)\.',refpath.name)
             rid=m.group(1) if m else ''
             for line in refpath.read_text(encoding='utf-8').splitlines():
                 row=json.loads(line)
-                batch_references[(rid,row['prompt'])]=[t for e in row['events'] if not e['data'].get('stop') for t in e['data'].get('tokens',[])]
+                batch_references[(rid,row['prompt'])]=output_text(row)
         for path in sorted(root.iterdir()):
             if not path.is_file():
                 continue
@@ -58,16 +64,17 @@ def main():
                 match=re.search(r'-r(\d+)\.',path.name)
                 round_id=match.group(1) if match else ''
                 for row in rows:
-                    tokens=[t for e in row['events'] if not e['data'].get('stop') for t in e['data'].get('tokens', [])]
+                    tokens=output_text(row)
                     key=(round_id,row['prompt'])
                     match=tokens==references[key] if key in references else None
                     first_diff=(next((i for i,(x,y) in enumerate(zip(tokens,references[key])) if x!=y),
                         min(len(tokens),len(references[key])) if len(tokens)!=len(references[key]) else None) if key in references else None)
                     matches.append(match)
                     sample_summary.append(dict(prompt=row['prompt'], ttft_ms=row['ttft_seconds']*1000,
-                        wall_seconds=row['wall_seconds'], timings=row['timings'], output_tokens=len(tokens),
+                        wall_seconds=row['wall_seconds'], timings=row['timings'], output_tokens=row['final']['tokens_predicted'],
+                        comparison_basis='returned_text', streamed_token_ids=sum(len(e['data'].get('tokens', [])) for e in row['events']),
                         output_sha256=hashlib.sha256(json.dumps(tokens).encode()).hexdigest(), matches_reference=match,
-                        first_difference_token=first_diff,
+                        first_difference_character=first_diff,
                         matches_batch512=(tokens==batch_references[key] if key in batch_references else None)))
                 summary['server'].append(dict(file=str(path), samples=sample_summary,
                     ttft_ms=describe([r['ttft_seconds']*1000 for r in rows]),

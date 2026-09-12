@@ -4,6 +4,8 @@ GitHub 项目：llama2-7b-lora-opt-exp — Record how to optimize the inference 
 
 完整执行顺序与可复制命令见 **[全套运行手册](docs/runbook.md)**：编译 → 下载 → 合并 → BF16 测试/bench → Q4 测试/bench → PPL 对比。
 
+已完成的 512 输入 / 256 输出优化、五轮确认、TTFT 与投机结果见 **[优化实验报告](docs/optimization-20260912.md)**。报告包含真实数据来源、逐轮成绩、输出差异及候选配置。
+
 当前已定：Llama 2 7B Base 的 `modelscope/Llama-2-7b-ms` 镜像 + `iamshnoo/alpaca-2-7b-chinese`，CPU 合并 BF16，再本地 Q4_K_M。镜像配置和 tokenizer 已核对；与官方权重逐字节一致性及真实合并尚未验证。最新下载说明见运行手册，环境与验收进度见 [状态记录](docs/status.md)。
 
 目标：将指定 LoRA 与其原始 Llama 2 7B 基座合并为 BF16，使用 llama.cpp 部署，并比较 Q4、投机解码与二者组合。
@@ -12,13 +14,12 @@ GitHub 项目：llama2-7b-lora-opt-exp — Record how to optimize the inference 
 
 ## 1. 配置环境
 
-以下命令在本项目根目录执行，适用于 PowerShell。Python 3.11+、Git、CMake 和 C++ 编译器为前提。Windows CUDA 构建还需要受支持的 CUDA Toolkit 和 Visual Studio C++ 工具链；nvidia-smi 的 CUDA 版本不表示已安装 Toolkit。
+以下命令在本项目根目录执行，统一使用 CMD。Python 3.11+、Git、CMake 和 C++ 编译器为前提。Windows CUDA 构建还需要受支持的 CUDA Toolkit 和 Visual Studio C++ 工具链；nvidia-smi 的 CUDA 版本不表示已安装 Toolkit。
 
-```powershell
-(& E:\Software\Anaconda\Scripts\conda.exe shell.powershell hook) | Out-String | Invoke-Expression
-conda activate llama2-7b
+```cmd
+call E:\Software\Anaconda\condabin\conda.bat activate llama2-7b
 python -m pip check
-if (-not (Test-Path config.local.json)) { Copy-Item config.example.json config.local.json }
+if not exist config.local.json copy config.example.json config.local.json
 ```
 
 首次 bootstrap 使用配置的 llama_ref，记录实际提交到 llama.lock.json；随后始终使用该提交。应将两个 lock 文件纳入 Git。未生成锁之前不宣称依赖已经固定。更严格复现可在第一次构建前指定完整 commit SHA。默认 CPU 后端可先验证流程；准备好 CUDA 工具链后，将 backend 改为 cuda 并重新 bootstrap。
@@ -27,7 +28,7 @@ if (-not (Test-Path config.local.json)) { Copy-Item config.example.json config.l
 
 在 config.local.json 填写本地目录：base_model 是 LoRA 训练时使用的准确基座，adapter 是 PEFT 适配器目录，tokenizer 是训练时使用的 tokenizer 目录。默认使用 models/base、models/lora。若已有完整合并 BF16 checkpoint，直接把 merged_model 指向它并跳过 merge。
 
-```powershell
+```cmd
 python scripts/pipeline.py merge
 python scripts/pipeline.py convert
 python scripts/pipeline.py quantize
@@ -37,13 +38,13 @@ python scripts/pipeline.py quantize
 
 ## 3. 运行实验
 
-```powershell
-# 每次仅启动一组；在另一个终端运行 benchmark，结束后 Ctrl+C 停止服务。
+```cmd
+REM 每次仅启动一组；在另一个终端运行 benchmark，结束后 Ctrl+C 停止服务。
 python scripts/pipeline.py serve --precision bf16 --spec none
 python scripts/pipeline.py serve --precision q4 --spec none
 python scripts/pipeline.py serve --precision bf16 --spec ngram-simple
 python scripts/pipeline.py serve --precision q4 --spec ngram-simple
-# 需要先配置兼容的 draft_gguf
+REM 需要先配置兼容的 draft_gguf
 python scripts/pipeline.py serve --precision bf16 --spec draft-simple
 python scripts/pipeline.py serve --precision q4 --spec draft-simple
 
