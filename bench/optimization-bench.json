@@ -1,0 +1,12 @@
+[
+  {"label":"q4-reference"},
+  {"label":"q4-fa-off","fa":"off"},
+  {"label":"q4-b512-u128","batch":512},
+  {"label":"q4-b512-u512","batch":512,"ubatch":512},
+  {"label":"q4-t4-b512-u512","threads":4,"batch":512,"ubatch":512},
+  {"label":"q4-kv-q8-b512","batch":512,"ubatch":512,"extra":["-ctk","q8_0","-ctv","q8_0"]},
+  {"label":"q4-ngl24","ngl":24},
+  {"label":"q4-reference-end"},
+  {"label":"q4-ngl0","ngl":0,"fa":"off"},
+  {"label":"bf16-ngl0","bf16":true,"ngl":0,"fa":"off"}
+]

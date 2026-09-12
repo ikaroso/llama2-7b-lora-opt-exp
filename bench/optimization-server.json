@@ -1,0 +1,13 @@
+[
+  {"label":"reference"},
+  {"label":"batch512","batch":512,"ubatch":512},
+  {"label":"ngram-simple","extra":["--spec-type","ngram-simple"]},
+  {"label":"ngram-short","extra":["--spec-type","ngram-simple","--spec-ngram-simple-size-n","4","--spec-ngram-simple-size-m","8","--spec-draft-n-max","8"]},
+  {"label":"ngram-map-k","extra":["--spec-type","ngram-map-k"]},
+  {"label":"ngram-map-k4v","extra":["--spec-type","ngram-map-k4v"]},
+  {"label":"ngram-mod","extra":["--spec-type","ngram-mod"]},
+  {"label":"ngram-cache","extra":["--spec-type","ngram-cache"]},
+  {"label":"tinyllama-draft3","extra":["--spec-type","draft-simple","-md","models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf","-ngld","99","--spec-draft-n-max","3"]},
+  {"label":"tinyllama-draft5","extra":["--spec-type","draft-simple","-md","models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf","-ngld","99","--spec-draft-n-max","5"]},
+  {"label":"reference-end"}
+]
