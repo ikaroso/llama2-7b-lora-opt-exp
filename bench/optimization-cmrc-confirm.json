@@ -1,0 +1,187 @@
+[
+  {
+    "label": "reference-r1"
+  },
+  {
+    "label": "batch512-r1",
+    "batch": 512,
+    "ubatch": 512
+  },
+  {
+    "label": "ngram-r1",
+    "extra": [
+      "--spec-type",
+      "ngram-simple"
+    ]
+  },
+  {
+    "label": "combined-r1",
+    "batch": 512,
+    "ubatch": 512,
+    "extra": [
+      "--spec-type",
+      "ngram-simple"
+    ]
+  },
+  {
+    "label": "draft3-r1",
+    "extra": [
+      "--spec-type",
+      "draft-simple",
+      "-md",
+      "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf",
+      "-ngld",
+      "99",
+      "--spec-draft-n-max",
+      "3"
+    ]
+  },
+  {
+    "label": "batch512-r2",
+    "batch": 512,
+    "ubatch": 512
+  },
+  {
+    "label": "ngram-r2",
+    "extra": [
+      "--spec-type",
+      "ngram-simple"
+    ]
+  },
+  {
+    "label": "combined-r2",
+    "batch": 512,
+    "ubatch": 512,
+    "extra": [
+      "--spec-type",
+      "ngram-simple"
+    ]
+  },
+  {
+    "label": "reference-r2"
+  },
+  {
+    "label": "draft3-r2",
+    "extra": [
+      "--spec-type",
+      "draft-simple",
+      "-md",
+      "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf",
+      "-ngld",
+      "99",
+      "--spec-draft-n-max",
+      "3"
+    ]
+  },
+  {
+    "label": "ngram-r3",
+    "extra": [
+      "--spec-type",
+      "ngram-simple"
+    ]
+  },
+  {
+    "label": "combined-r3",
+    "batch": 512,
+    "ubatch": 512,
+    "extra": [
+      "--spec-type",
+      "ngram-simple"
+    ]
+  },
+  {
+    "label": "reference-r3"
+  },
+  {
+    "label": "batch512-r3",
+    "batch": 512,
+    "ubatch": 512
+  },
+  {
+    "label": "draft3-r3",
+    "extra": [
+      "--spec-type",
+      "draft-simple",
+      "-md",
+      "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf",
+      "-ngld",
+      "99",
+      "--spec-draft-n-max",
+      "3"
+    ]
+  },
+  {
+    "label": "combined-r4",
+    "batch": 512,
+    "ubatch": 512,
+    "extra": [
+      "--spec-type",
+      "ngram-simple"
+    ]
+  },
+  {
+    "label": "reference-r4"
+  },
+  {
+    "label": "batch512-r4",
+    "batch": 512,
+    "ubatch": 512
+  },
+  {
+    "label": "ngram-r4",
+    "extra": [
+      "--spec-type",
+      "ngram-simple"
+    ]
+  },
+  {
+    "label": "draft3-r4",
+    "extra": [
+      "--spec-type",
+      "draft-simple",
+      "-md",
+      "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf",
+      "-ngld",
+      "99",
+      "--spec-draft-n-max",
+      "3"
+    ]
+  },
+  {
+    "label": "reference-r5"
+  },
+  {
+    "label": "batch512-r5",
+    "batch": 512,
+    "ubatch": 512
+  },
+  {
+    "label": "ngram-r5",
+    "extra": [
+      "--spec-type",
+      "ngram-simple"
+    ]
+  },
+  {
+    "label": "combined-r5",
+    "batch": 512,
+    "ubatch": 512,
+    "extra": [
+      "--spec-type",
+      "ngram-simple"
+    ]
+  },
+  {
+    "label": "draft3-r5",
+    "extra": [
+      "--spec-type",
+      "draft-simple",
+      "-md",
+      "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf",
+      "-ngld",
+      "99",
+      "--spec-draft-n-max",
+      "3"
+    ]
+  }
+]

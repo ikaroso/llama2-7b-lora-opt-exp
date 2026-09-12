@@ -1,0 +1,42 @@
+[
+  {
+    "label": "reference-r1"
+  },
+  {
+    "label": "batch512-r1",
+    "batch": 512,
+    "ubatch": 512
+  },
+  {
+    "label": "batch512-r2",
+    "batch": 512,
+    "ubatch": 512
+  },
+  {
+    "label": "reference-r2"
+  },
+  {
+    "label": "reference-r3"
+  },
+  {
+    "label": "batch512-r3",
+    "batch": 512,
+    "ubatch": 512
+  },
+  {
+    "label": "batch512-r4",
+    "batch": 512,
+    "ubatch": 512
+  },
+  {
+    "label": "reference-r4"
+  },
+  {
+    "label": "reference-r5"
+  },
+  {
+    "label": "batch512-r5",
+    "batch": 512,
+    "ubatch": 512
+  }
+]
