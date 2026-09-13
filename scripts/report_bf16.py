@@ -13,13 +13,24 @@ def stats(values):
 
 
 def main():
-    result = dict(server={}, bench={}, ratios={}, raw_sha256={})
+    result = dict(server={}, bench={}, ratios={}, raw_sha256={}, telemetry={})
     for mode in ['server', 'bench']:
         folder = ROOT / f'results/bf16-confirm-{mode}-20260913'
         assert not list(folder.glob('*.error.json')), 'Failed runs must be resolved and disclosed'
         for path in folder.iterdir():
             if path.is_file():
                 result['raw_sha256'][str(path.relative_to(ROOT))] = hashlib.sha256(path.read_bytes()).hexdigest()
+            if path.name.endswith('.gpu.csv'):
+                samples=[]
+                for line in path.read_text().splitlines():
+                    parts=line.split(',')
+                    if len(parts)==5:
+                        try:
+                            samples.append([float(v.strip()) for v in parts[1:]])
+                        except ValueError:
+                            pass
+                if samples:
+                    result['telemetry'][path.name]=dict(samples=len(samples), whole_gpu_memory_max_mib=max(s[0] for s in samples), temperature_max_c=max(s[1] for s in samples))
         for label in ['bf16-cpu', 'q4-cpu', 'q4-gpu']:
             rounds = []
             for n in range(1, 6):

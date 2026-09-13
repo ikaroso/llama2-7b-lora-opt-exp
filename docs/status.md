@@ -1,5 +1,13 @@
 # 项目进度
 
+## BF16 原始基线补齐（2026-09-13）
+
+原始基线明确为 LoRA 合并后的 BF16，无量化、无投机；此前“基准”仅指 Q4 GPU 对照。已完成 BF16 CPU、同运行条件 Q4 CPU、Q4 GPU 各五轮 server 与 bench，45 条正式真实问题请求均为 512/256、无提示缓存，15 个 bench 进程全部成功。详见 [BF16 基线报告](bf16-baseline-20260913.md)。
+
+server 五轮均值：BF16 CPU prefill/decode 为 17.45/4.38 token/s，TTFT 29.69 秒；Q4 CPU 为 25.97/8.97，TTFT 19.95 秒；Q4 GPU 为 2130.40/47.68，TTFT 0.555 秒。同 CPU 条件量化的配对 decode 为 2.05 倍；BF16 CPU 到 Q4 GPU 的整体部署 decode 为 10.90 倍，后者不能全部归因于量化。
+
+按用户要求，batch/ubatch 方案不再作为主推荐，保留历史结果。ngram/TinyLlama 额外收益沿用 9 月 12 日的独立五轮配对，不与本次 BF16 直接跨日期拼接成总倍率。PPL/正式准确率仍未完成；BF16 最快部分 GPU 卸载配置未搜索。
+
 ## 优化完成（2026-09-12）
 
 已完成统一 512/256 的初筛及五轮确认，详见 [完整实验报告](optimization-20260912.md)。原模型与本地配置保留。五轮真实中文问题结果（每轮三条，非空文本流式 TTFT）：基准 prefill 2037.51 token/s、decode 45.53 token/s、TTFT 398.67 ms；batch512 为 2168.42 / 45.27 / 376.72；TinyLlama draft3 为 1703.67 / 66.63 / 453.32。

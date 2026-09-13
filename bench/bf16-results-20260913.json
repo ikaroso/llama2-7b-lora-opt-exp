@@ -1,0 +1,939 @@
+{
+  "server": {
+    "bf16-cpu": {
+      "rounds": [
+        {
+          "round": 1,
+          "prefill_tps": 16.40453147413886,
+          "decode_tps": 4.290512641218718,
+          "ttft_ms": 31526.18483333693,
+          "wall_seconds": 90.79536606668262
+        },
+        {
+          "round": 2,
+          "prefill_tps": 17.102501347712735,
+          "decode_tps": 4.3014085229289245,
+          "ttft_ms": 30239.475433365442,
+          "wall_seconds": 89.36957956668145
+        },
+        {
+          "round": 3,
+          "prefill_tps": 17.167133884297744,
+          "decode_tps": 4.252172104003439,
+          "ttft_ms": 30131.85486665073,
+          "wall_seconds": 89.94723723334027
+        },
+        {
+          "round": 4,
+          "prefill_tps": 18.295152624273484,
+          "decode_tps": 4.5046319010011215,
+          "ttft_ms": 28272.85260000887,
+          "wall_seconds": 84.73532953332567
+        },
+        {
+          "round": 5,
+          "prefill_tps": 18.2882317479012,
+          "decode_tps": 4.536600599806204,
+          "ttft_ms": 28284.386400016956,
+          "wall_seconds": 84.34654696667955
+        }
+      ],
+      "stats": {
+        "prefill_tps": {
+          "values": [
+            16.40453147413886,
+            17.102501347712735,
+            17.167133884297744,
+            18.295152624273484,
+            18.2882317479012
+          ],
+          "mean": 17.451510215664804,
+          "stdev": 0.8232066886677518,
+          "min": 16.40453147413886,
+          "max": 18.295152624273484
+        },
+        "decode_tps": {
+          "values": [
+            4.290512641218718,
+            4.3014085229289245,
+            4.252172104003439,
+            4.5046319010011215,
+            4.536600599806204
+          ],
+          "mean": 4.377065153791682,
+          "stdev": 0.13279530360695627,
+          "min": 4.252172104003439,
+          "max": 4.536600599806204
+        },
+        "ttft_ms": {
+          "values": [
+            31526.18483333693,
+            30239.475433365442,
+            30131.85486665073,
+            28272.85260000887,
+            28284.386400016956
+          ],
+          "mean": 29690.950826675788,
+          "stdev": 1401.1411012665462,
+          "min": 28272.85260000887,
+          "max": 31526.18483333693
+        },
+        "wall_seconds": {
+          "values": [
+            90.79536606668262,
+            89.36957956668145,
+            89.94723723334027,
+            84.73532953332567,
+            84.34654696667955
+          ],
+          "mean": 87.83881187334191,
+          "stdev": 3.0560365156896827,
+          "min": 84.34654696667955,
+          "max": 90.79536606668262
+        }
+      }
+    },
+    "q4-cpu": {
+      "rounds": [
+        {
+          "round": 1,
+          "prefill_tps": 24.717948255807592,
+          "decode_tps": 8.568470073122988,
+          "ttft_ms": 20947.024900000542,
+          "wall_seconds": 50.62133083335357
+        },
+        {
+          "round": 2,
+          "prefill_tps": 26.246244659632517,
+          "decode_tps": 8.739988628646428,
+          "ttft_ms": 19730.544633348472,
+          "wall_seconds": 48.830374399995584
+        },
+        {
+          "round": 3,
+          "prefill_tps": 25.69715236738362,
+          "decode_tps": 8.964508666470978,
+          "ttft_ms": 20140.56766667636,
+          "wall_seconds": 48.51518973333683
+        },
+        {
+          "round": 4,
+          "prefill_tps": 26.392893094950754,
+          "decode_tps": 9.267182576979607,
+          "ttft_ms": 19613.219999999274,
+          "wall_seconds": 47.058902700004786
+        },
+        {
+          "round": 5,
+          "prefill_tps": 26.791041285099276,
+          "decode_tps": 9.310827177537757,
+          "ttft_ms": 19330.744666648872,
+          "wall_seconds": 46.648510833329055
+        }
+      ],
+      "stats": {
+        "prefill_tps": {
+          "values": [
+            24.717948255807592,
+            26.246244659632517,
+            25.69715236738362,
+            26.392893094950754,
+            26.791041285099276
+          ],
+          "mean": 25.96905593257475,
+          "stdev": 0.801768890955037,
+          "min": 24.717948255807592,
+          "max": 26.791041285099276
+        },
+        "decode_tps": {
+          "values": [
+            8.568470073122988,
+            8.739988628646428,
+            8.964508666470978,
+            9.267182576979607,
+            9.310827177537757
+          ],
+          "mean": 8.970195424551552,
+          "stdev": 0.32351279956462053,
+          "min": 8.568470073122988,
+          "max": 9.310827177537757
+        },
+        "ttft_ms": {
+          "values": [
+            20947.024900000542,
+            19730.544633348472,
+            20140.56766667636,
+            19613.219999999274,
+            19330.744666648872
+          ],
+          "mean": 19952.420373334706,
+          "stdev": 627.5754914758521,
+          "min": 19330.744666648872,
+          "max": 20947.024900000542
+        },
+        "wall_seconds": {
+          "values": [
+            50.62133083335357,
+            48.830374399995584,
+            48.51518973333683,
+            47.058902700004786,
+            46.648510833329055
+          ],
+          "mean": 48.33486170000396,
+          "stdev": 1.579386174153846,
+          "min": 46.648510833329055,
+          "max": 50.62133083335357
+        }
+      }
+    },
+    "q4-gpu": {
+      "rounds": [
+        {
+          "round": 1,
+          "prefill_tps": 2078.928918496783,
+          "decode_tps": 46.44866557234015,
+          "ttft_ms": 555.9407333494164,
+          "wall_seconds": 6.028903899985987
+        },
+        {
+          "round": 2,
+          "prefill_tps": 2057.18602131384,
+          "decode_tps": 46.54618202660251,
+          "ttft_ms": 533.854466668951,
+          "wall_seconds": 5.9944657333544455
+        },
+        {
+          "round": 3,
+          "prefill_tps": 2153.081878788219,
+          "decode_tps": 48.48637269896509,
+          "ttft_ms": 556.269133327684,
+          "wall_seconds": 5.799792600000122
+        },
+        {
+          "round": 4,
+          "prefill_tps": 2167.5994682607557,
+          "decode_tps": 48.368703817371916,
+          "ttft_ms": 576.9785333347196,
+          "wall_seconds": 5.832870266671914
+        },
+        {
+          "round": 5,
+          "prefill_tps": 2195.223388275849,
+          "decode_tps": 48.536830286119226,
+          "ttft_ms": 551.3821333103502,
+          "wall_seconds": 5.789447800004079
+        }
+      ],
+      "stats": {
+        "prefill_tps": {
+          "values": [
+            2078.928918496783,
+            2057.18602131384,
+            2153.081878788219,
+            2167.5994682607557,
+            2195.223388275849
+          ],
+          "mean": 2130.403935027089,
+          "stdev": 59.39254700834541,
+          "min": 2057.18602131384,
+          "max": 2195.223388275849
+        },
+        "decode_tps": {
+          "values": [
+            46.44866557234015,
+            46.54618202660251,
+            48.48637269896509,
+            48.368703817371916,
+            48.536830286119226
+          ],
+          "mean": 47.677350880279775,
+          "stdev": 1.0793980495249658,
+          "min": 46.44866557234015,
+          "max": 48.536830286119226
+        },
+        "ttft_ms": {
+          "values": [
+            555.9407333494164,
+            533.854466668951,
+            556.269133327684,
+            576.9785333347196,
+            551.3821333103502
+          ],
+          "mean": 554.8849999982242,
+          "stdev": 15.376183047330565,
+          "min": 533.854466668951,
+          "max": 576.9785333347196
+        },
+        "wall_seconds": {
+          "values": [
+            6.028903899985987,
+            5.9944657333544455,
+            5.799792600000122,
+            5.832870266671914,
+            5.789447800004079
+          ],
+          "mean": 5.889096060003309,
+          "stdev": 0.11370490722469617,
+          "min": 5.789447800004079,
+          "max": 6.028903899985987
+        }
+      }
+    }
+  },
+  "bench": {
+    "bf16-cpu": {
+      "rounds": [
+        {
+          "round": 1,
+          "prefill_tps": 18.541283,
+          "decode_tps": 4.374654
+        },
+        {
+          "round": 2,
+          "prefill_tps": 18.311153,
+          "decode_tps": 4.569209
+        },
+        {
+          "round": 3,
+          "prefill_tps": 18.135345,
+          "decode_tps": 4.465914
+        },
+        {
+          "round": 4,
+          "prefill_tps": 18.373063,
+          "decode_tps": 4.439809
+        },
+        {
+          "round": 5,
+          "prefill_tps": 17.734885,
+          "decode_tps": 4.543566
+        }
+      ],
+      "stats": {
+        "prefill_tps": {
+          "values": [
+            18.541283,
+            18.311153,
+            18.135345,
+            18.373063,
+            17.734885
+          ],
+          "mean": 18.2191458,
+          "stdev": 0.3071885827259865,
+          "min": 17.734885,
+          "max": 18.541283
+        },
+        "decode_tps": {
+          "values": [
+            4.374654,
+            4.569209,
+            4.465914,
+            4.439809,
+            4.543566
+          ],
+          "mean": 4.4786304,
+          "stdev": 0.07890027663006015,
+          "min": 4.374654,
+          "max": 4.569209
+        }
+      }
+    },
+    "q4-cpu": {
+      "rounds": [
+        {
+          "round": 1,
+          "prefill_tps": 26.463935,
+          "decode_tps": 9.888172
+        },
+        {
+          "round": 2,
+          "prefill_tps": 27.394697,
+          "decode_tps": 9.872293
+        },
+        {
+          "round": 3,
+          "prefill_tps": 26.356915,
+          "decode_tps": 9.856923
+        },
+        {
+          "round": 4,
+          "prefill_tps": 24.415114,
+          "decode_tps": 9.869598
+        },
+        {
+          "round": 5,
+          "prefill_tps": 26.414848,
+          "decode_tps": 10.002539
+        }
+      ],
+      "stats": {
+        "prefill_tps": {
+          "values": [
+            26.463935,
+            27.394697,
+            26.356915,
+            24.415114,
+            26.414848
+          ],
+          "mean": 26.2091018,
+          "stdev": 1.0900858229450108,
+          "min": 24.415114,
+          "max": 27.394697
+        },
+        "decode_tps": {
+          "values": [
+            9.888172,
+            9.872293,
+            9.856923,
+            9.869598,
+            10.002539
+          ],
+          "mean": 9.897905,
+          "stdev": 0.059539462463982756,
+          "min": 9.856923,
+          "max": 10.002539
+        }
+      }
+    },
+    "q4-gpu": {
+      "rounds": [
+        {
+          "round": 1,
+          "prefill_tps": 2176.364595,
+          "decode_tps": 51.248572
+        },
+        {
+          "round": 2,
+          "prefill_tps": 2164.142609,
+          "decode_tps": 51.322057
+        },
+        {
+          "round": 3,
+          "prefill_tps": 2087.814625,
+          "decode_tps": 48.488167
+        },
+        {
+          "round": 4,
+          "prefill_tps": 2069.434373,
+          "decode_tps": 50.059787
+        },
+        {
+          "round": 5,
+          "prefill_tps": 2184.219272,
+          "decode_tps": 52.388664
+        }
+      ],
+      "stats": {
+        "prefill_tps": {
+          "values": [
+            2176.364595,
+            2164.142609,
+            2087.814625,
+            2069.434373,
+            2184.219272
+          ],
+          "mean": 2136.3950948,
+          "stdev": 53.61538427853448,
+          "min": 2069.434373,
+          "max": 2184.219272
+        },
+        "decode_tps": {
+          "values": [
+            51.248572,
+            51.322057,
+            48.488167,
+            50.059787,
+            52.388664
+          ],
+          "mean": 50.7014494,
+          "stdev": 1.4867363297492608,
+          "min": 48.488167,
+          "max": 52.388664
+        }
+      }
+    }
+  },
+  "ratios": {
+    "server": {
+      "q4-cpu/bf16-cpu": {
+        "prefill_tps": {
+          "values": [
+            1.5067756305490667,
+            1.5346436246966093,
+            1.496880757182655,
+            1.4426167213239545,
+            1.4649333874596093
+          ],
+          "mean": 1.4891700242423789,
+          "stdev": 0.03602737046096972,
+          "min": 1.4426167213239545,
+          "max": 1.5346436246966093
+        },
+        "decode_tps": {
+          "values": [
+            1.997073727462348,
+            2.0318899221167617,
+            2.1082186814665507,
+            2.0572563487196462,
+            2.052379743972943
+          ],
+          "mean": 2.0493636847476497,
+          "stdev": 0.040542796554956795,
+          "min": 1.997073727462348,
+          "max": 2.1082186814665507
+        },
+        "ttft_ms": {
+          "values": [
+            0.6644325981953388,
+            0.6524764186741913,
+            0.6684144655484683,
+            0.693712101763411,
+            0.6834422494891841
+          ],
+          "mean": 0.6724955667341187,
+          "stdev": 0.016220391175765472,
+          "min": 0.6524764186741913,
+          "max": 0.693712101763411
+        },
+        "wall_seconds": {
+          "values": [
+            0.5575320969153411,
+            0.5463869768298698,
+            0.5393738732350298,
+            0.5553634234879199,
+            0.553057742266049
+          ],
+          "mean": 0.550342822546842,
+          "stdev": 0.007420064911751806,
+          "min": 0.5393738732350298,
+          "max": 0.5575320969153411
+        }
+      },
+      "q4-gpu/bf16-cpu": {
+        "prefill_tps": {
+          "values": [
+            126.72894204714946,
+            120.28568099419942,
+            125.41883189701093,
+            118.47944167379325,
+            120.03475341610203
+          ],
+          "mean": 122.18953000565102,
+          "stdev": 3.6423588176998196,
+          "min": 118.47944167379325,
+          "max": 126.72894204714946
+        },
+        "decode_tps": {
+          "values": [
+            10.825901111701754,
+            10.821148881461783,
+            11.402730537015414,
+            10.73754856786907,
+            10.698942791700164
+          ],
+          "mean": 10.897254377949636,
+          "stdev": 0.2877598450088489,
+          "min": 10.698942791700164,
+          "max": 11.402730537015414
+        },
+        "ttft_ms": {
+          "values": [
+            0.017634253440065622,
+            0.017654223792516917,
+            0.018461164630901975,
+            0.020407510395132132,
+            0.019494222908438972
+          ],
+          "mean": 0.018730275033411122,
+          "stdev": 0.0012070941170032245,
+          "min": 0.017634253440065622,
+          "max": 0.020407510395132132
+        },
+        "wall_seconds": {
+          "values": [
+            0.06640100878670607,
+            0.0670750132474528,
+            0.06447994155678573,
+            0.06883634369272024,
+            0.0686388240918879
+          ],
+          "mean": 0.06708622627511054,
+          "stdev": 0.0017843654143322694,
+          "min": 0.06447994155678573,
+          "max": 0.06883634369272024
+        }
+      },
+      "q4-gpu/q4-cpu": {
+        "prefill_tps": {
+          "values": [
+            84.10604703035291,
+            78.38020440607457,
+            83.7867888241594,
+            82.12814944017792,
+            81.93871096368305
+          ],
+          "mean": 82.06798013288957,
+          "stdev": 2.2764029009960747,
+          "min": 78.38020440607457,
+          "max": 84.10604703035291
+        },
+        "decode_tps": {
+          "values": [
+            5.4208820449799155,
+            5.325657046513935,
+            5.40870386798929,
+            5.2193537157154415,
+            5.2129450327693405
+          ],
+          "mean": 5.317508341593585,
+          "stdev": 0.09954517079173957,
+          "min": 5.2129450327693405,
+          "max": 5.4208820449799155
+        },
+        "ttft_ms": {
+          "values": [
+            0.026540319496607942,
+            0.027057259522711437,
+            0.027619337375880463,
+            0.029417838240469486,
+            0.028523584725716436
+          ],
+          "mean": 0.027831667872277154,
+          "stdev": 0.0011518526954352054,
+          "min": 0.026540319496607942,
+          "max": 0.029417838240469486
+        },
+        "wall_seconds": {
+          "values": [
+            0.11909809166877218,
+            0.12276100290058369,
+            0.11954591194796131,
+            0.12394828463927018,
+            0.12410788032846871
+          ],
+          "mean": 0.12189223429701121,
+          "stdev": 0.0024085083986652117,
+          "min": 0.11909809166877218,
+          "max": 0.12410788032846871
+        }
+      }
+    },
+    "bench": {
+      "q4-cpu/bf16-cpu": {
+        "prefill_tps": {
+          "values": [
+            1.4272979383357667,
+            1.4960661952854635,
+            1.4533451114384646,
+            1.3288537681496004,
+            1.4894287727267475
+          ],
+          "mean": 1.4389983571872085,
+          "stdev": 0.06759165002019091,
+          "min": 1.3288537681496004,
+          "max": 1.4960661952854635
+        },
+        "decode_tps": {
+          "values": [
+            2.260332359999214,
+            2.1606131389481202,
+            2.2071457264963006,
+            2.2229780605426943,
+            2.2014732481051227
+          ],
+          "mean": 2.2105085068182904,
+          "stdev": 0.036126161027320185,
+          "min": 2.1606131389481202,
+          "max": 2.260332359999214
+        }
+      },
+      "q4-gpu/bf16-cpu": {
+        "prefill_tps": {
+          "values": [
+            117.37939575163165,
+            118.18712939594792,
+            115.12406436160988,
+            112.63415212803659,
+            123.15948324446423
+          ],
+          "mean": 117.29684497633805,
+          "stdev": 3.925290710206674,
+          "min": 112.63415212803659,
+          "max": 123.15948324446423
+        },
+        "decode_tps": {
+          "values": [
+            11.714885794396542,
+            11.232153530293756,
+            10.857389327246338,
+            11.27521183906785,
+            11.530296687667791
+          ],
+          "mean": 11.321987435734455,
+          "stdev": 0.32552701658286737,
+          "min": 10.857389327246338,
+          "max": 11.714885794396542
+        }
+      },
+      "q4-gpu/q4-cpu": {
+        "prefill_tps": {
+          "values": [
+            82.23888832103012,
+            78.9985962976703,
+            79.21316379401762,
+            84.76038133592168,
+            82.68907214608996
+          ],
+          "mean": 81.58002037894593,
+          "stdev": 2.4517625795015032,
+          "min": 78.9985962976703,
+          "max": 84.76038133592168
+        },
+        "decode_tps": {
+          "values": [
+            5.182815590181886,
+            5.198595402304206,
+            4.919199125325418,
+            5.072120161327746,
+            5.2375365894599355
+          ],
+          "mean": 5.122053373719838,
+          "stdev": 0.12896731562524244,
+          "min": 4.919199125325418,
+          "max": 5.2375365894599355
+        }
+      }
+    }
+  },
+  "raw_sha256": {
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r1.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r1.gpu.csv": "87c4a42489cd70d47f13eaca477738c575219b9ee5d59051736491243bc630cc",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r1.meta.json": "0a76c0a84753339c14d7acfba10c9443bcf9da2cdbdd6a1338516fe6004c9414",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r1.metrics.txt": "e8ed3b5a5edcc565c2a5490f15a15c8bf67f463126e188061fe9265cdcb04904",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r1.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r1.samples.jsonl": "7ee3d6b69850946093d92225b7744764fbe6d3d1ce829c9d3ec237a6dc1df991",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r1.server.txt": "55c834b6a7788f54115c820f3ac108c2728c651046de39a82dd24fc0bcb3daa6",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r2.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r2.gpu.csv": "e241f76d3595f8bd615def186266a34eeda9efcd3eb5697e800c98b4077e95f7",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r2.meta.json": "13129b00f7a62d4a26e3d10c60dd89b93550ec8a1577a6c01c31579094d8b6af",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r2.metrics.txt": "c48093e1522e1777bcccef20e8835c714265690b6f5fb1abb58a4f9b388628c8",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r2.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r2.samples.jsonl": "295ee606b676e4fbc89bb9966c655690e9b6458805b551ffb3971920b63a500d",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r2.server.txt": "e526514f6c9ab1b8695447f2724e651be3a30d5e349307798c4d2dd6d619f7be",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r3.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r3.gpu.csv": "c4089cc69beb46ee16c7440deeb9424c357debb6edaf527ba87245ba1ab52a83",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r3.meta.json": "5f7a22b81f07f12b7e50ca456ecbdc3c66916ec85c6732c6998c517e5bba9ab6",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r3.metrics.txt": "281f68fb5ab5ba6e46f3bcd32cf76307a7ac790fa3df683a6d568b13bab75af3",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r3.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r3.samples.jsonl": "1b9810f29ae59f230f8e46d387d722c6cc7b7b61883ef11b31262d747c14312b",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r3.server.txt": "eb438cb6a5727597dd81b63bc47dd2730f12dfcbb3d0fcfab84ea1fbe41a9630",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r4.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r4.gpu.csv": "03626af51a8c96361d6f0817c630ea9693d671c12ef074a1153f9193f7494139",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r4.meta.json": "b3f42da6a11c6457b68526bda93dfba40e59228fd249a08de972b2558335eab7",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r4.metrics.txt": "8298180b8af11e55b45824af2d3eb9b5c21a8f0110c540d765cae3b283133a0a",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r4.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r4.samples.jsonl": "59a287a1f1f5ef6e913a302880f93e521998d27e1b20d770ce60667029fa7bac",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r4.server.txt": "6e4a856351daa99bbe1ef2b6ace0c59bc46dc35ccd73d831a0015015f2e5958d",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r5.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r5.gpu.csv": "f53a20493337f67ad3fb55508a900257fe92e227c19cf68d06049ac4dc7044a8",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r5.meta.json": "e19beccd47d33ddbfaaf08b5ca2df41eb158bc2adaba21858608e5eaf910e84b",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r5.metrics.txt": "15040d5fd742c900efe53153a88337f636174e47857d7e8630338450d39bd660",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r5.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r5.samples.jsonl": "ad21a1744ff4904d1ac0d5e2d27c24e1d58f17941f3e641080848ee2d9b6c892",
+    "results\\bf16-confirm-server-20260913\\bf16-cpu-r5.server.txt": "1d50362ed2b291739a6cf2472f818d4b7713e936d6606ded6d5951e4922de1cb",
+    "results\\bf16-confirm-server-20260913\\protocol.json": "a00ee24493e1f4e1098b23eb485a821f5c794f1ea5806209efc4675511ef0127",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r1.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r1.gpu.csv": "10962f1b54ae52f920660c58bfe3293867bc5f70b93fb3f702db467f7c272773",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r1.meta.json": "aaec9a422849e03bcf99124ce1ffcd38308cbf57a1226fcbf6dc4f8ca8f38ae4",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r1.metrics.txt": "41dc8392f964cf57b3692563ee529d8ccfe1bee5e71b34537c28ebac62ee9e28",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r1.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r1.samples.jsonl": "ba6849e3ebdacdfc82c2d886df72da11f568112704539929c5145815d18a4ad1",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r1.server.txt": "4a606b973d84c0c16662fd286fc1d1617b4eb8e0faa3a3ea03b97aa00af85e59",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r2.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r2.gpu.csv": "43a005d554b556d58ae8df4b56e68540f19b9779adc6c821907b6d810d660718",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r2.meta.json": "f73ae9e02ad0f3c7c9df82ac6d7788a4a0cc29cf2cd8c4beaada225ebb04b186",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r2.metrics.txt": "0e7b2f4c9a2da9fdbcf9fff46cc5990cb5760578b1d14648cffc4a8f7caaf58a",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r2.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r2.samples.jsonl": "63ac5b8ddfbc6e7e411df8dee18671a3557246a3de8a35f361941980069808d5",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r2.server.txt": "366a1922599d9884e87c720e4cb9f206a45266bf29603a770059f55a9d97ec01",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r3.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r3.gpu.csv": "bcaded9929d48b314dfc21a126385720b988de86cb60aedc2fadeb0a8c980444",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r3.meta.json": "65403ac438b219c10adda4a1a1b00d9f2504236745acaed8bc576c048b777b67",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r3.metrics.txt": "65a62349f8d02cfccd8c52df27794412ee23131d4b5e191c935acb756717b88b",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r3.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r3.samples.jsonl": "09ff7e0f32275cb49cf7866ea494349b0f3f71c47db60c12cf5304f24be951f8",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r3.server.txt": "8e0719fa1a55a8438b17cd418ef77eeee657b9209a1f20cede2b74262040504b",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r4.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r4.gpu.csv": "c0cfb022f86cdb9727c4093964f7a3d0ab3a4a88fef57a9e011c365a97d59914",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r4.meta.json": "817ac20915c6c3d01341a81c84d04705773477e92d3ddf0a538f9530c22eed76",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r4.metrics.txt": "589d0943c4c418642935584e289d848c6723361d42ad2d3788bbc1d7932e23e5",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r4.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r4.samples.jsonl": "5e99ea474966084b25b34290fe2689b835e8bae12e23990389330548e888def7",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r4.server.txt": "b01616a393acfeb7e6dea774c46ed30efacb11fccfd11af06bba641520721f6e",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r5.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r5.gpu.csv": "b9a6101fb664358e2133cc80752fa026618e5a9705b4978d002a455dc74be1a5",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r5.meta.json": "0b7ced0ca8b8a879869bd0d5cf7712a6ecd507938ea9df78f5bb5ba482c88b09",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r5.metrics.txt": "20daa52d164c70b55be37a1c8d9743b1d6c753022c5b13fce28ea9302a3fcf03",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r5.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r5.samples.jsonl": "da29bbd35095fb5a547b7fc7a14b445c4af5bd1fec13ebe3428448cb8d86e9c5",
+    "results\\bf16-confirm-server-20260913\\q4-cpu-r5.server.txt": "b7e9d96a1eff59286754cdb9e07d57ebddae3a6e3189300ead2443b3d2b93253",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r1.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r1.gpu.csv": "dd3921b90e064ece257e27b8db60e37e576b27b83d9e52aa0d008386d0bde292",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r1.meta.json": "79b03175a1e587a0bd126203458c720e46ada3d62d1c98bec87fa6ad48c01c1d",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r1.metrics.txt": "119005365794f7762e88783277bc42b6a87e300b937fec7c18b5b75aa7902077",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r1.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r1.samples.jsonl": "625d7a2391117724f71e367c00eb313089d0c2e1d9e1fc8fc288d60fa9f552a1",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r1.server.txt": "1f04821183cf8eaf548a5a4c90931ac6d56712824114ae2506bd98c996e05eab",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r2.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r2.gpu.csv": "4a75c22451f03519f1ae9cd01c679a12acc16cc8a0a9c5f134cb54dee06a2154",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r2.meta.json": "557a7ae24373f6db02664a80971bdd6738bef6987fe5a95f080cb22108071c22",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r2.metrics.txt": "f78be1e2fd908607edf18874557fe79fea6284b083f51a591cb87e35cf59dcb9",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r2.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r2.samples.jsonl": "8e85f936ada2c16278166aee2f43e58d4c866734a09ab7dbb90e833fd837702d",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r2.server.txt": "232adbbb4a17047bbbc6709172efdb9f697388df2b214fae0f55bfcfb5bdc02c",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r3.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r3.gpu.csv": "75e41ad0e90b12cfdd6ae2db6f6782f8017157872819fbe0ddb8ef498257067f",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r3.meta.json": "32be0279d454e89863f76a82c79c3a8d612e5c4ade8ea2fa3134803ff1232ee6",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r3.metrics.txt": "4b698199415df47d10556fee6715cda7c72d782edc02280cef4500af7413a3dc",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r3.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r3.samples.jsonl": "be1e48e08972bfaf033a16c3db77ede5bc30c471efddb8350278bc365d14a29d",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r3.server.txt": "5ef4cef8a4a93c209ac98130b6beb0ebcba6bd4667e75a0d5572a69a7ff729db",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r4.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r4.gpu.csv": "5456bccdcfdfd194a0e23a206356dfc418bcbb70706f83e8be6d695536b1c88b",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r4.meta.json": "c459ce0245e9093b04aecbe945ce43495489a008383b2a4432e4eafc4bb9f690",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r4.metrics.txt": "7d58a207aca0cb2ad9589d47e1e12cba9c03600231ba43dc252416ddefb395a8",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r4.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r4.samples.jsonl": "291df64811c7f078dccf42ffe4e536368ba08799068d93cd090f896bacef41f4",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r4.server.txt": "90cdd094c49c9a3793d338d7e8928deaa5dd45d34b34e771bf854fb97e94154d",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r5.done.json": "3b060aef84b89c454dfb23dc234a74409ab7b93eb14050a6a4f49787975ceeb4",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r5.gpu.csv": "cab9503de30b0bcf2d368a6704137759bfdacf8af8cc0b4dcafc3c47eba80a06",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r5.meta.json": "8ffce9e5d0c56b5f80eae4f7e7118495cdde70d140f0491fca1603c0627218e8",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r5.metrics.txt": "63e13dc0cebfbd5bb37b130bda0b7f8f9062d0e7e455a9c8ebdcbd34116889e8",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r5.prompts.json": "d6d886aea8064a23bee8d0545ca9e93c62be3496e231e47b3a3328ea3850f2ea",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r5.samples.jsonl": "d9956b2705717478a825f00d28b8121d9a1fb2aaf35196c1b169621d3ebf447d",
+    "results\\bf16-confirm-server-20260913\\q4-gpu-r5.server.txt": "5b23c78e6e8747f34ee57ba8bdae2bc453adfdb70e755857af29b40754bc67f5",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r1.meta.json": "b02d2ee35a7f63d5f72705ca598e58b799ccf89b2517b749d3c8a52d39c1e09b",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r1.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r1.stdout.json": "d9334c67276e73f535e52f2910e852bcd5dacc53e85dfed1f5dfd259b461f7ed",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r2.meta.json": "b02d2ee35a7f63d5f72705ca598e58b799ccf89b2517b749d3c8a52d39c1e09b",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r2.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r2.stdout.json": "ac875fd11736ddd93319e2d881afceb7822ee935a0ab5a3cde3e97c811f2aefb",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r3.meta.json": "b02d2ee35a7f63d5f72705ca598e58b799ccf89b2517b749d3c8a52d39c1e09b",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r3.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r3.stdout.json": "090bd8782a68fb4fe388eeab6b835f06e981dd245d27d398000b40ac4e78fb14",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r4.meta.json": "b02d2ee35a7f63d5f72705ca598e58b799ccf89b2517b749d3c8a52d39c1e09b",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r4.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r4.stdout.json": "b34d39b9f7578cadeec2c804e02709ac06c0c12b7eea414343f6a2d9f1a0c093",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r5.meta.json": "b02d2ee35a7f63d5f72705ca598e58b799ccf89b2517b749d3c8a52d39c1e09b",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r5.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\bf16-cpu-r5.stdout.json": "e666e3700a691257038b5f11a10a81f99c4664d61953a18d136eaca028e7a674",
+    "results\\bf16-confirm-bench-20260913\\protocol.json": "2bb568df70955561fc25e836988c53c74a882742d5ccf69b60c0f6bd97b449a4",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r1.meta.json": "662e67a6a1cc4103f79215ed6d04262e3e0776515f28731fb0bc6f758af2d234",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r1.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r1.stdout.json": "207064c4c8010300e09593c4ecbc9a3730ac3ef215eeb7467c74b8e51383f786",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r2.meta.json": "662e67a6a1cc4103f79215ed6d04262e3e0776515f28731fb0bc6f758af2d234",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r2.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r2.stdout.json": "b5aaea99a040b9494c3b89ff12016c2ffa35d61686a61d878020cfd3711a8bbe",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r3.meta.json": "662e67a6a1cc4103f79215ed6d04262e3e0776515f28731fb0bc6f758af2d234",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r3.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r3.stdout.json": "b50fb2e642ce6b85cb225bf9e9f7c0ba09fc5ffdd94d1f3ab9c65dd5380db32e",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r4.meta.json": "662e67a6a1cc4103f79215ed6d04262e3e0776515f28731fb0bc6f758af2d234",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r4.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r4.stdout.json": "da320fbfa5d371bfde49cde992b22cc4ec5de233165b406ead98e0eb64e1286d",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r5.meta.json": "662e67a6a1cc4103f79215ed6d04262e3e0776515f28731fb0bc6f758af2d234",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r5.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\q4-cpu-r5.stdout.json": "eda884f01c3d4f29c3caaa98c2885b3492067058698c76e008d9eef639d792c9",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r1.meta.json": "4fdde5203a661632c1175460e7b3a1b09bc5bb0dfe7459fd4866eeee8728f636",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r1.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r1.stdout.json": "6b8f37670a7544165590d08a6425c9bba6e98f51232d02c709ea82fbaa10143e",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r2.meta.json": "4fdde5203a661632c1175460e7b3a1b09bc5bb0dfe7459fd4866eeee8728f636",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r2.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r2.stdout.json": "f10820111eec9030f620d3a205b17f707e69a7320aedbdc645d2fea4c857cfe5",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r3.meta.json": "4fdde5203a661632c1175460e7b3a1b09bc5bb0dfe7459fd4866eeee8728f636",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r3.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r3.stdout.json": "d6f3452e1525ba855cf83b68a76d4a90e1498ae9be18148c8725006ccefd45d9",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r4.meta.json": "4fdde5203a661632c1175460e7b3a1b09bc5bb0dfe7459fd4866eeee8728f636",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r4.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r4.stdout.json": "a582c80c9ec588f8829b41fb1fa963bf58768ddf489aac6a4bafbeddbef16df0",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r5.meta.json": "4fdde5203a661632c1175460e7b3a1b09bc5bb0dfe7459fd4866eeee8728f636",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r5.stderr.txt": "06919bef22cc3ca5f3d6df4d069d170be6b9ce58ee7ac8afdc8d168189c08008",
+    "results\\bf16-confirm-bench-20260913\\q4-gpu-r5.stdout.json": "b5ac3d1604cf1f60dee9ae5c4f3241d4e93ef6c954d63bc5756eeeae415de312"
+  },
+  "telemetry": {
+    "bf16-cpu-r1.gpu.csv": {
+      "samples": 368,
+      "whole_gpu_memory_max_mib": 1859.0,
+      "temperature_max_c": 60.0
+    },
+    "bf16-cpu-r2.gpu.csv": {
+      "samples": 358,
+      "whole_gpu_memory_max_mib": 1265.0,
+      "temperature_max_c": 62.0
+    },
+    "bf16-cpu-r3.gpu.csv": {
+      "samples": 355,
+      "whole_gpu_memory_max_mib": 1170.0,
+      "temperature_max_c": 73.0
+    },
+    "bf16-cpu-r4.gpu.csv": {
+      "samples": 342,
+      "whole_gpu_memory_max_mib": 1170.0,
+      "temperature_max_c": 61.0
+    },
+    "bf16-cpu-r5.gpu.csv": {
+      "samples": 334,
+      "whole_gpu_memory_max_mib": 1166.0,
+      "temperature_max_c": 68.0
+    },
+    "q4-cpu-r1.gpu.csv": {
+      "samples": 204,
+      "whole_gpu_memory_max_mib": 1649.0,
+      "temperature_max_c": 60.0
+    },
+    "q4-cpu-r2.gpu.csv": {
+      "samples": 193,
+      "whole_gpu_memory_max_mib": 1265.0,
+      "temperature_max_c": 70.0
+    },
+    "q4-cpu-r3.gpu.csv": {
+      "samples": 197,
+      "whole_gpu_memory_max_mib": 1170.0,
+      "temperature_max_c": 63.0
+    },
+    "q4-cpu-r4.gpu.csv": {
+      "samples": 185,
+      "whole_gpu_memory_max_mib": 1169.0,
+      "temperature_max_c": 69.0
+    },
+    "q4-cpu-r5.gpu.csv": {
+      "samples": 187,
+      "whole_gpu_memory_max_mib": 1166.0,
+      "temperature_max_c": 60.0
+    },
+    "q4-gpu-r1.gpu.csv": {
+      "samples": 27,
+      "whole_gpu_memory_max_mib": 6154.0,
+      "temperature_max_c": 77.0
+    },
+    "q4-gpu-r2.gpu.csv": {
+      "samples": 27,
+      "whole_gpu_memory_max_mib": 6060.0,
+      "temperature_max_c": 79.0
+    },
+    "q4-gpu-r3.gpu.csv": {
+      "samples": 26,
+      "whole_gpu_memory_max_mib": 6054.0,
+      "temperature_max_c": 78.0
+    },
+    "q4-gpu-r4.gpu.csv": {
+      "samples": 26,
+      "whole_gpu_memory_max_mib": 6052.0,
+      "temperature_max_c": 76.0
+    },
+    "q4-gpu-r5.gpu.csv": {
+      "samples": 26,
+      "whole_gpu_memory_max_mib": 6055.0,
+      "temperature_max_c": 76.0
+    }
+  }
+}

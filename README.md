@@ -6,7 +6,7 @@ GitHub 项目：llama2-7b-lora-opt-exp — Record how to optimize the inference 
 
 已完成的 512 输入 / 256 输出优化、五轮确认、TTFT 与投机结果见 **[优化实验报告](docs/optimization-20260912.md)**。报告包含真实数据来源、逐轮成绩、输出差异及候选配置。
 
-当前已定：Llama 2 7B Base 的 `modelscope/Llama-2-7b-ms` 镜像 + `iamshnoo/alpaca-2-7b-chinese`，CPU 合并 BF16，再本地 Q4_K_M。镜像配置和 tokenizer 已核对；与官方权重逐字节一致性及真实合并尚未验证。最新下载说明见运行手册，环境与验收进度见 [状态记录](docs/status.md)。
+当前已定：Llama 2 7B Base 的 `modelscope/Llama-2-7b-ms` 镜像 + `iamshnoo/alpaca-2-7b-chinese`，已有合并 BF16 和本地 Q4_K_M 产物及真实推理记录。镜像配置和 tokenizer 已核对；镜像与官方权重逐字节一致性尚未证明。最新下载说明见运行手册，环境与验收进度见 [状态记录](docs/status.md)。
 
 目标：将指定 LoRA 与其原始 Llama 2 7B 基座合并为 BF16，使用 llama.cpp 部署，并比较 Q4、投机解码与二者组合。
 
