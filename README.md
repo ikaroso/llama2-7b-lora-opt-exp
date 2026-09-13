@@ -10,7 +10,7 @@ GitHub 项目：llama2-7b-lora-opt-exp — Record how to optimize the inference 
 
 目标：将指定 LoRA 与其原始 Llama 2 7B 基座合并为 BF16，使用 llama.cpp 部署，并比较 Q4、投机解码与二者组合。
 
-当前已有 BF16/Q4 产物，三组冒烟和 bench 有成功记录；PPL 与投机实验待完成。实测数据见 [进度记录](docs/status.md)，下一阶段见 [投机解码方案](docs/speculative-plan.md)。
+当前已有 BF16/Q4 产物，冒烟、bench 与投机实验已有成功记录；PPL 尚未完成。原始精度基线及纯量化/整体部署收益见 [BF16 基线补测](docs/bf16-baseline-20260913.md)。实测数据见 [进度记录](docs/status.md)。
 
 ## 1. 配置环境
 

@@ -1,0 +1,132 @@
+[
+  {
+    "label": "bf16-cpu-r1",
+    "bf16": true,
+    "ngl": 0,
+    "fa": "off",
+    "extra": [
+      "--no-kv-offload",
+      "1",
+      "--no-op-offload",
+      "1"
+    ]
+  },
+  {
+    "label": "q4-cpu-r1",
+    "ngl": 0,
+    "fa": "off",
+    "extra": [
+      "--no-kv-offload",
+      "1",
+      "--no-op-offload",
+      "1"
+    ]
+  },
+  {
+    "label": "q4-gpu-r1"
+  },
+  {
+    "label": "q4-cpu-r2",
+    "ngl": 0,
+    "fa": "off",
+    "extra": [
+      "--no-kv-offload",
+      "1",
+      "--no-op-offload",
+      "1"
+    ]
+  },
+  {
+    "label": "bf16-cpu-r2",
+    "bf16": true,
+    "ngl": 0,
+    "fa": "off",
+    "extra": [
+      "--no-kv-offload",
+      "1",
+      "--no-op-offload",
+      "1"
+    ]
+  },
+  {
+    "label": "q4-gpu-r2"
+  },
+  {
+    "label": "bf16-cpu-r3",
+    "bf16": true,
+    "ngl": 0,
+    "fa": "off",
+    "extra": [
+      "--no-kv-offload",
+      "1",
+      "--no-op-offload",
+      "1"
+    ]
+  },
+  {
+    "label": "q4-cpu-r3",
+    "ngl": 0,
+    "fa": "off",
+    "extra": [
+      "--no-kv-offload",
+      "1",
+      "--no-op-offload",
+      "1"
+    ]
+  },
+  {
+    "label": "q4-gpu-r3"
+  },
+  {
+    "label": "q4-cpu-r4",
+    "ngl": 0,
+    "fa": "off",
+    "extra": [
+      "--no-kv-offload",
+      "1",
+      "--no-op-offload",
+      "1"
+    ]
+  },
+  {
+    "label": "bf16-cpu-r4",
+    "bf16": true,
+    "ngl": 0,
+    "fa": "off",
+    "extra": [
+      "--no-kv-offload",
+      "1",
+      "--no-op-offload",
+      "1"
+    ]
+  },
+  {
+    "label": "q4-gpu-r4"
+  },
+  {
+    "label": "bf16-cpu-r5",
+    "bf16": true,
+    "ngl": 0,
+    "fa": "off",
+    "extra": [
+      "--no-kv-offload",
+      "1",
+      "--no-op-offload",
+      "1"
+    ]
+  },
+  {
+    "label": "q4-cpu-r5",
+    "ngl": 0,
+    "fa": "off",
+    "extra": [
+      "--no-kv-offload",
+      "1",
+      "--no-op-offload",
+      "1"
+    ]
+  },
+  {
+    "label": "q4-gpu-r5"
+  }
+]
