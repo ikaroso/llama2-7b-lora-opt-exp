@@ -286,8 +286,21 @@ def markdown_report(result, output_path, report_path):
                          f"{rate} | {total['no_draft_requests']}/{total['requests']} | "
                          f"{total['matching_text_requests']}/{total['requests']} |")
     lines += ['', '比较对象为所有 SSE content 拼接后的原始返回文本，不裁剪空白或 EOS，不根据部分流式 token ID '
-              '宣称逐 token 一致。逐请求文本、SHA256、是否不同及首个不同字符位置保存在 JSON 摘要中。', '',
-              '## 合计逐轮与范围', '',
+              '宣称逐 token 一致。逐请求文本、SHA256、是否不同及首个不同字符位置保存在 JSON 摘要中。', '']
+    lines += ['## 每题五轮接受情况', '',
+              '| 任务 | question_id | 方法 | 接受/提出 token | 接受率 | 返回文本相同次数 |',
+              '|---|---:|---|---:|---:|---:|']
+    for item in result['inputs']['offsets']:
+        for method in METHODS[1:]:
+            rows = [r for r in result['methods'][method]['samples']
+                    if r['category'] == item['category'] and r['question_id'] == item['question_id']]
+            drafted = sum(r['drafted'] for r in rows)
+            accepted = sum(r['accepted'] for r in rows)
+            rate = f'{100 * accepted / drafted:.2f}%' if drafted else '不适用'
+            matching = sum(r['matches_reference_text'] for r in rows)
+            lines.append(f"| {scopes[item['category']]} | {item['question_id']} | {names[method]} | "
+                         f"{accepted}/{drafted} | {rate} | {matching}/5 |")
+    lines += ['', '## 合计逐轮与范围', '',
               '| 方法 | 轮次 | Prefill token/s | Decode token/s | TTFT ms | 请求耗时 s |',
               '|---|---:|---:|---:|---:|---:|']
     for method in METHODS:
