@@ -1,31 +1,35 @@
 # 项目协作约定
 
-## 目标与入口
+## 目标与完成条件
 
-- 本项目验证 Llama 2 7B Base + LoRA → CPU 合并 BF16 → GGUF → 本地 Q4_K_M，并比较推理、吞吐、PPL 和投机解码组合。
-- 开始工作先读 `docs/runbook.md` 和 `docs/status.md`；设计背景见 `docs/design.md`。旧决策记录属于历史，实际进度以文件、命令输出和实验日志为准。
-- 当前底座源为 `modelscope/Llama-2-7b-ms`，LoRA 为 `iamshnoo/alpaca-2-7b-chinese`。不要将 Chat、中文扩词表或已量化模型直接替代底座；调整选型时同步核验适配器、tokenizer 和来源记录。
+优化 **Llama 2 7B + LoRA 合并模型**的单请求 prefill、decode 和 TTFT。原始基线是 Merge BF16，无量化、无投机；Q4 GPU 无投机只是投机实验对照。当前底座为 `modelscope/Llama-2-7b-ms`，LoRA 为 `iamshnoo/alpaca-2-7b-chinese`。
 
-## 环境与实现
+在用户授权范围内完成实现、必要验证和留档；本地修复、复测无需逐步确认。实验任务按约定的方法范围与停止条件收尾，不在首次结果后提前交付，也不无限扩展实验。只做文档整理时不重跑模型。用户新的明确要求优先于本文件默认约定。
 
-- 用户命令、文档和新增 Windows 脚本统一使用 **CMD**：`set "NAME=value"`、`%NAME%`、`type`；不混入 PowerShell 语法。路径加双引号，从项目根目录执行。
-- 使用 Conda `llama2-7b`，不要依赖系统 Python。合并用 CPU PyTorch；llama.cpp 的 CUDA 后端独立于 PyTorch CUDA。
-- llama.cpp 位于 `llama.cpp/`，版本以 `llama.lock.json` 为准。CUDA 构建入口为 `scripts/build_cuda.cmd`，产物在 `llama.cpp/build-cuda/bin`；不要无故升级依赖或修改第三方源码。
-- 优先复用 `scripts/` 中现有入口，保持实现简单。修改模型源或依赖时同步更新相关锁文件与手册，不放宽哈希、词表及输出覆盖检查来掩盖错误。
+## 按需查阅
 
-## 验证与实验
+- 结论、基线、收益与未完成项：[总报告](docs/final-report.md)；阶段进度：[状态记录](docs/status.md)。历史文字与现有日志冲突时核查证据，不照抄旧结论。
+- 下载、合并、构建、量化与 PPL：[运行手册](docs/runbook.md)；改变模型选型或架构时参考 [设计](docs/design.md)。
+- 复现实验：[优化实验](docs/optimization-20260912.md)、[BF16 补测](docs/bf16-baseline-20260913.md)，对应协议与摘要在 `bench/`，原始证据在 `results/`。
 
-- 优化实验统一输入 512、输出 256 token；llama-bench 使用 p512/n256，其他工具使用可追溯的真实文本或问题，并核对实际 token 数。最终确认至少五轮，记录逐轮结果与波动；初筛不得冒充确认。
-- 关闭提示缓存，避免重复请求或退化输出夸大投机收益。固定长度实验若忽略 EOS，必须说明；质量、输出差异、负收益和未满足的适配条件如实记录。
+## 本机环境
 
-- 按改动范围验证：文档核对命令和变量；脚本先做语法与相关参数检查，适用时使用 `--dry-run`；依赖修改后执行 `python -m pip check`。不因小改动重复跑完整 7B 实验。
-- 区分静态检查、小模型测试、真实 7B 合并和真实推理。只报告实际完成的验证；失败也记录，不把配置成功当成全链路跑通。
-- 实验通过 `scripts/run_logged.py` 保存命令、退出码和原始输出。每轮用新的结果前缀，同组比较沿用相同 RUN；不覆盖旧结果。
-- 对比固定模型来源、语料、上下文、KV 类型和运行参数，明确变化项。BF16/Q4 的纯量化对比使用同一后端；GPU、Flash Attention 和投机解码收益单独说明。
-- `llama-bench` 不衡量投机解码收益；投机实验通过 server 和对应请求测量。GPU 实验先查空闲显存并核对实际卸载日志，避免并行启动多个大模型进程。
+- 面向用户的命令、文档及 Windows 脚本统一 **CMD**，从项目根目录执行，路径加双引号；使用 Conda `llama2-7b`，不依赖系统 Python。合并用 CPU PyTorch，llama.cpp CUDA 后端独立于 PyTorch CUDA。
+- `llama.cpp/` 版本以 `llama.lock.json` 为准；构建入口 `scripts/build_cuda.cmd`，CUDA 产物 `llama.cpp/build-cuda/bin/`。复用现有 `scripts/`；因任务需要变更模型源、依赖或源码时同步记录版本、兼容性与验证，不绕过哈希或词表检查。
+- 本机 RTX 4060 Laptop 8GB 无法完整容纳 BF16 7B 权重。测量前核对空闲显存和实际卸载；性能实验串行运行，避免多个测试争用 CPU/GPU。
 
-## 文件与交付
+## 实验可信度
 
-- 保持 `.gitignore` 的边界：模型、数据、构建产物、实验结果、本地配置和凭据不提交；模型与 LoRA 许可证独立于仓库代码许可证。
-- 保留用户未提交的改动；提交仅包含本次相关文件。Git 推送按用户授权执行，不强推或改写已有历史。
-- 流程变化同步更新 `docs/runbook.md`；完成真实实验后更新 `docs/status.md`，引用具体结果。交付简述改了什么、验证了什么、还有什么未验证。
+- 性能协议固定**单并发、输入 512、输出 256 token**。bench 用 p512/tg256；server 用可追溯的真实文本/问题，保存来源、提示和长度核验。PPL 等质量指标使用各自协议，不套用生成长度要求。
+- 最终确认至少五轮，保留逐轮数据、统计波动与失败；区分初筛、确认及问题覆盖。关闭提示缓存；忽略 EOS、重复输出和运行状态漂移必须披露，不能用于夸大成绩。
+- 固定对照条件并列出变化项：纯量化用相同后端与卸载条件，整体部署收益单列；不同日期的倍率不直接相乘。batch/ubatch 不是并发数，按当前约定不列为主优化方法。
+- `llama-bench` 不提供 TTFT 或投机收益；这两项用 server 实测。接受率、返回文本一致性和回答质量分别报告；流式 token ID 不完整时不声称逐 token 一致，性能通过不等于 PPL/质量通过。
+- 用 `scripts/optimize.py` 或 `scripts/run_logged.py` 等现有入口保存协议、命令、退出/完成状态和原始输出；结果使用新目录或前缀，不覆盖旧日志。汇总引用证据，未运行、失败及适配前提缺失均如实标记。
+
+## 验证、文档与 Git
+
+- 验证覆盖本次变化即可：文档检查链接与命令，代码运行受影响检查；修复相关失败后复测。没有新问题时不重复全套 7B 测试。
+- 流程变化更新运行手册；实验结果更新总报告、状态记录及可复现摘要。`AGENTS.md` 只保留稳定约定，不堆积成绩与历史。
+- 保留用户改动，合理分阶段提交本次相关文件。版本化协议、配置模板和 `bench/` 摘要可提交；模型、数据、构建产物、`results/`、`config.local.json` 与凭据遵循 `.gitignore`。推送按用户授权执行，不强推或改写历史。
+
+维护依据：[OpenAI：Rethinking skills and prompts for GPT-6 Astra](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra)。按任务指向必要资料，保留项目特有约束与明确完成边界。
