@@ -113,13 +113,14 @@ def aggregate_round(rows, round_id):
     )
 
 
-def build_summary(folder):
+def build_summary(folder, include_bf16=False):
+    methods = METHODS + (('bf16-cpu',) if include_bf16 else ())
     folder = Path(folder).resolve()
     require(folder.is_dir(), f'No results directory: {folder}')
     errors = sorted(path.name for path in folder.glob('*.error.json'))
     require(not errors, f'Failed runs in result directory: {errors}')
     expected = {f'{method}-r{round_id}.samples.jsonl'
-                for method in METHODS for round_id in ROUNDS}
+                for method in methods for round_id in ROUNDS}
     actual = {path.name for path in folder.glob('*.samples.jsonl')}
     require(actual == expected,
             f'Incomplete/unexpected run matrix: missing={sorted(expected-actual)}, '
@@ -149,11 +150,20 @@ def build_summary(folder):
 
     canonical = None
     reference_texts = {}
-    for method in METHODS:
+    for method in methods:
         all_samples = []
         per_scope = {scope: [] for scope in SCOPES}
         for round_id in ROUNDS:
             label = f'{method}-r{round_id}'
+            if method == 'bf16-cpu':
+                command = read_json(folder / f'{label}.meta.json')['command']
+                def option(flag):
+                    require(command.count(flag) == 1, f'{label}: missing/duplicate {flag}')
+                    return command[command.index(flag) + 1]
+                require(option('-ngl') == '0' and option('-fa') == 'off'
+                        and option('-m').endswith('llama2-7b-lora-bf16.gguf')
+                        and '--no-kv-offload' in command and '--no-op-offload' in command,
+                        f'{label}: expected merged BF16 with CPU-only compute')
             done = read_json(folder / f'{label}.done.json')
             require(done.get('samples') == SAMPLE_COUNT, f'{label}: done count != 12')
             prompts = read_json(folder / f'{label}.prompts.json')
@@ -195,7 +205,8 @@ def build_summary(folder):
                 drafted = count(timings.get('draft_n', 0), f'{name}/draft_n')
                 accepted = count(timings.get('draft_n_accepted', 0), f'{name}/draft_n_accepted')
                 require(accepted <= drafted, f'{name}: accepted tokens exceed drafted tokens')
-                require(method != 'reference' or drafted == 0, f'{name}: reference used drafting')
+                require(method not in ('reference', 'bf16-cpu') or drafted == 0,
+                        f'{name}: reference used drafting')
                 output = returned_text(row, name)
                 require(output != '', f'{name}: no returned text')
                 if method == 'reference':
@@ -236,6 +247,16 @@ def build_summary(folder):
                 key: stats([row[key] / baseline[key] for row, baseline in zip(values['rounds'], references)])
                 for key in METRICS
             }
+            if include_bf16:
+                baselines = result['methods']['bf16-cpu']['scopes'][scope]['rounds']
+                values['deployment_ratios_vs_bf16_cpu'] = {
+                    key: stats([row[key] / baseline[key] for row, baseline in zip(values['rounds'], baselines)])
+                    for key in METRICS
+                }
+    if include_bf16:
+        result['metric_definitions']['deployment_ratios_vs_bf16_cpu'] = (
+            'same-round method metric / merged BF16 CPU metric; changes precision, backend and FA; '
+            'not an isolated quantization gain, not paired across historical batches')
     return result
 
 
@@ -244,14 +265,16 @@ def markdown_report(result, output_path, report_path):
         return Path(os.path.relpath(path, report_path.parent)).as_posix()
 
     names = dict(reference='Q4 GPU 无投机', ngram='Q4 GPU + ngram-simple',
-                 draft3='Q4 GPU + TinyLlama draft3')
+                 draft3='Q4 GPU + TinyLlama draft3', **{'bf16-cpu': 'Merge BF16 纯 CPU'})
+    include_bf16 = 'bf16-cpu' in result['methods']
+    methods = (('bf16-cpu',) if include_bf16 else ()) + METHODS
     scopes = dict(all='两类合计', summarization='摘要', rag='RAG')
     lines = ['# Spec-Bench 子集：本机固定长度投机解码测试', '',
-             '已完成三种方法各五轮：每轮相同的 12 个问题（摘要 6 个、RAG 6 个），共 180 条正式请求。'
+             f"已完成{'四' if include_bf16 else '三'}种配置各五轮：每轮相同的 12 个问题（摘要 6 个、RAG 6 个），共 {result['formal_requests']} 条正式请求。"
              '每次单并发，输入 512、输出 256 token；预热不计入结果。五轮是重复测量，不是 60 个独立问题。', '',
              '数据来自 [Spec-Bench](https://github.com/hemingkx/Spec-Bench)。'
              '这是该数据子集在本项目合并模型与 llama.cpp 上的长度受控测试，不是官方完整 Spec-Bench 成绩。'
-             '模型仍是原有 Llama 2 7B + 中文 LoRA 合并后的 Q4_K_M；Q4 GPU 无投机是本次投机对照，'
+             '模型为原有 Llama 2 7B + 中文 LoRA 合并产物及其 Q4_K_M 量化版本；Q4 GPU 无投机是本次投机对照，'
              '项目原始精度基线仍为 Merge BF16。', '',
              '## 性能结果', '',
              '以下为五轮均值 ± 样本标准差；每轮 prefill/decode 用该组总 token 数除以总耗时，'
@@ -259,12 +282,26 @@ def markdown_report(result, output_path, report_path):
              '| 任务 | 方法 | Prefill token/s ↑ | Decode token/s ↑ | TTFT ms ↓ | 请求耗时 s ↓ |',
              '|---|---|---:|---:|---:|---:|']
     for scope in SCOPES:
-        for method in METHODS:
+        for method in methods:
             values = result['methods'][method]['scopes'][scope]['stats']
             cells = [f"{values[key]['mean']:.2f} ± {values[key]['stdev']:.2f}" for key in METRICS]
             lines.append(f'| {scopes[scope]} | {names[method]} | ' + ' | '.join(cells) + ' |')
+    if include_bf16:
+        lines += ['', '## 相对 BF16 纯 CPU 的整体部署收益', '',
+                  '本批 BF16 与三组 Q4 均重新测量五轮，按同轮比值汇总；不使用上批 Q4 数值计算倍率。'
+                  'BF16 使用 ngl=0、FA off、--no-kv-offload、--no-op-offload，8 线程。'
+                  '复用 CUDA 构建但推理计算在 CPU；GPU 整卡采样包含桌面占用，不表示模型卸载。'
+                  'Q4 组使用全 GPU 与 FA on，因此收益包含精度、后端和 FA 的共同变化，不能称为纯量化收益。', '',
+                  '| 任务 | 配置 | Prefill 倍率 | Decode 倍率 | TTFT 降低 | 请求耗时降低 |',
+                  '|---|---|---:|---:|---:|---:|']
+        for scope in SCOPES:
+            for method in METHODS:
+                ratios = result['methods'][method]['scopes'][scope]['deployment_ratios_vs_bf16_cpu']
+                cells = [f"{ratios[key]['mean']:.2f}×" for key in METRICS[:2]]
+                cells += [f"{(1-ratios[key]['mean'])*100:.2f}%" for key in METRICS[2:]]
+                lines.append(f'| {scopes[scope]} | {names[method]} | ' + ' | '.join(cells) + ' |')
     lines += ['', '## 同轮配对变化', '',
-              '同一轮、同一任务下方法指标除以无投机对照，再对五个比值求均值。'
+              '同一轮、同一任务下方法指标除以 Q4 GPU 无投机对照，再对五个比值求均值。'
               '吞吐变化为正表示更快；TTFT/请求耗时变化为正表示更慢。', '',
               '| 任务 | 方法 | Prefill 变化 | Decode 变化 | TTFT 变化 | 请求耗时变化 |',
               '|---|---|---:|---:|---:|---:|']
@@ -279,7 +316,7 @@ def markdown_report(result, output_path, report_path):
               '| 任务 | 方法 | 接受/提出 token | 接受率 | 无草稿请求 | 返回文本与同轮对照完全相同 |',
               '|---|---|---:|---:|---:|---:|']
     for scope in SCOPES:
-        for method in METHODS:
+        for method in methods:
             total = result['methods'][method]['scopes'][scope]['totals']
             rate = '不适用' if total['acceptance_rate'] is None else f"{100 * total['acceptance_rate']:.2f}%"
             lines.append(f"| {scopes[scope]} | {names[method]} | {total['accepted']}/{total['drafted']} | "
@@ -303,13 +340,13 @@ def markdown_report(result, output_path, report_path):
     lines += ['', '## 合计逐轮与范围', '',
               '| 方法 | 轮次 | Prefill token/s | Decode token/s | TTFT ms | 请求耗时 s |',
               '|---|---:|---:|---:|---:|---:|']
-    for method in METHODS:
+    for method in methods:
         for row in result['methods'][method]['scopes']['all']['rounds']:
             lines.append(f"| {names[method]} | {row['round']} | "
                          + ' | '.join(f'{row[key]:.3f}' for key in METRICS) + ' |')
     lines += ['', '| 方法 | Prefill 范围 | Decode 范围 | TTFT ms 范围 | 请求耗时 s 范围 |',
               '|---|---:|---:|---:|---:|']
-    for method in METHODS:
+    for method in methods:
         values = result['methods'][method]['scopes']['all']['stats']
         lines.append(f'| {names[method]} | ' + ' | '.join(
             f"{values[key]['min']:.3f}–{values[key]['max']:.3f}" for key in METRICS) + ' |')
@@ -320,7 +357,7 @@ def markdown_report(result, output_path, report_path):
               f"[首轮输入 token 与来源元数据]({link(Path(result['folder']) / 'reference-r1.prompts.json')})。"
               '摘要记录全部原始文件 SHA256；运行目录内保留命令、协议、SSE、完成状态和 GPU 采样。', '',
               '| 方法 | GPU 显存采样最大值 MiB | 温度采样最大值 °C |', '|---|---:|---:|']
-    for method in METHODS:
+    for method in methods:
         telemetry_rows = [result['telemetry'][f'{method}-r{r}'] for r in ROUNDS]
         cells = []
         for key in ('whole_gpu_memory_max_mib', 'temperature_max_c'):
@@ -348,20 +385,21 @@ def main():
     parser.add_argument('--folder', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--include-bf16', action='store_true', help='Require five extra CPU BF16 rounds in the same batch')
     args = parser.parse_args()
     folder = args.folder.resolve()
     output, report = args.output.resolve(), args.report.resolve()
     require(output != report, 'JSON and Markdown outputs must differ')
     require(not output.is_relative_to(folder) and not report.is_relative_to(folder),
             'Generated summaries must stay outside the raw result directory')
-    result = build_summary(folder)
+    result = build_summary(folder, include_bf16=args.include_bf16)
     markdown = markdown_report(result, output, report)
     output.parent.mkdir(parents=True, exist_ok=True)
     report.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     report.write_text(markdown, encoding='utf-8')
     print(f"Validated {result['formal_requests']} requests, 12 unique prompts, 5 rounds per method")
-    for method in METHODS:
+    for method in result['methods']:
         values = result['methods'][method]['scopes']['all']['stats']
         print(method, {key: round(values[key]['mean'], 3) for key in METRICS})
 

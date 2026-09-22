@@ -1,0 +1,14 @@
+{
+  "artifacts/llama2-7b-lora-bf16.gguf": {
+    "bytes": 13478105216,
+    "sha256": "cf9a64c028e7184cc2351232942e45e72d579aa61728e81fa9e1e84b8be06ec2"
+  },
+  "artifacts/llama2-7b-lora-q4_k_m.gguf": {
+    "bytes": 4081004672,
+    "sha256": "4670ec2a4af25f9e074c1e55c7fd24458166eba74726902fd0f46629d12b66d8"
+  },
+  "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf": {
+    "bytes": 668788096,
+    "sha256": "9fecc3b3cd76bba89d504f29b616eedf7da85b96540e490ca5824d3f7d2776a0"
+  }
+}

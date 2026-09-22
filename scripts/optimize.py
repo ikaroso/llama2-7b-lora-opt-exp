@@ -64,6 +64,7 @@ def main():
     p.add_argument('--configs', required=True)
     p.add_argument('--repeat', type=int, default=3)
     p.add_argument('--dataset', choices=['wikitext', 'cmrc', 'specbench'], default='wikitext')
+    p.add_argument('--prompt-reference', help='Existing prompts JSON; fail before warmup if workload differs')
     a = p.parse_args()
     if a.dataset == 'specbench' and (a.mode != 'server' or a.repeat != 1):
         p.error('Spec-Bench uses server with --repeat 1 and five independent labels per method')
@@ -77,6 +78,7 @@ def main():
         input_tokens=512, output_tokens=256, ignore_eos=True,
         ttft='client time to first nonempty text SSE, excludes model loading; one warmup',
         dataset=a.dataset,
+        prompt_reference=a.prompt_reference,
         input_builder_sha256=(hashlib.sha256((ROOT/'scripts/specbench_inputs.py').read_bytes()).hexdigest() if a.dataset=='specbench' else None),
         source=({'cmrc':'https://github.com/ymcui/cmrc2018/blob/master/data/cmrc2018_dev.json',
                  'specbench':'https://github.com/hemingkx/Spec-Bench/tree/fd2c1cd7d2201ef71db4c5f4e455008f017967bf',
@@ -164,6 +166,12 @@ def main():
                     prompts = [all_tokens[offset:offset+512] for offset in offsets]
                     warmup=all_tokens[65536:65536+512]
                     warmup_offset=65536
+                if a.prompt_reference:
+                    reference = json.loads((ROOT / a.prompt_reference).read_text(encoding='utf-8'))
+                    actual = dict(corpus_sha256=hashlib.sha256(raw).hexdigest(), offsets=offsets,
+                                  tokens=prompts, warmup_offset=warmup_offset)
+                    if any(actual[key] != reference[key] for key in actual):
+                        raise ValueError('Workload differs from --prompt-reference')
                 write(out / (label+'.prompts.json'), dict(corpus_sha256=hashlib.sha256(raw).hexdigest(), offsets=offsets, tokens=prompts, warmup_offset=warmup_offset))
                 stream(port, warmup)  # distinct excluded warmup
                 per_round = 12 if a.dataset=='specbench' else 3

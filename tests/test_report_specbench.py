@@ -87,6 +87,49 @@ class ReportSpecBenchTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'run matrix'):
             build_summary(self.folder)
 
+    def add_bf16_rounds(self):
+        for round_id in ROUNDS:
+            label = f'bf16-cpu-r{round_id}'
+            write(self.folder / f'{label}.done.json', dict(samples=12))
+            write(self.folder / f'{label}.prompts.json', self.prompts)
+            write(self.folder / f'{label}.meta.json', dict(command=[
+                'llama-server.exe', '-m', 'artifacts/llama2-7b-lora-bf16.gguf',
+                '-ngl', '0', '-fa', 'off', '--no-kv-offload', '--no-op-offload']))
+            rows = self.read_rows(f'reference-r{round_id}')
+            for row in rows:
+                row['timings']['prompt_ms'] *= 10
+                row['timings']['predicted_ms'] *= 10
+                row['final']['timings'] = copy.deepcopy(row['timings'])
+                row['events'][-1]['data'] = copy.deepcopy(row['final'])
+                row['ttft_seconds'] *= 10
+                row['wall_seconds'] *= 10
+            self.write_rows(label, rows)
+
+    def test_bf16_requires_all_five_rounds(self):
+        with self.assertRaisesRegex(ValueError, 'run matrix'):
+            build_summary(self.folder, include_bf16=True)
+
+    def test_bf16_deployment_ratios_and_report(self):
+        self.add_bf16_rounds()
+        result = build_summary(self.folder, include_bf16=True)
+        self.assertEqual(result['formal_requests'], 240)
+        ratios = result['methods']['reference']['scopes']['all']['deployment_ratios_vs_bf16_cpu']
+        self.assertAlmostEqual(ratios['decode_tps']['mean'], 10)
+        self.assertAlmostEqual(ratios['ttft_ms']['mean'], .1)
+        report = markdown_report(result, self.folder.parent / 'summary.json', self.folder.parent / 'report.md')
+        self.assertIn('240 条正式请求', report)
+        self.assertIn('Merge BF16 纯 CPU', report)
+        self.assertIn('不能称为纯量化收益', report)
+
+    def test_bf16_rejects_gpu_offload(self):
+        self.add_bf16_rounds()
+        path = self.folder / 'bf16-cpu-r3.meta.json'
+        meta = json.loads(path.read_text())
+        meta['command'][meta['command'].index('-ngl') + 1] = '1'
+        write(path, meta)
+        with self.assertRaisesRegex(ValueError, 'CPU-only'):
+            build_summary(self.folder, include_bf16=True)
+
     def test_error_or_incomplete_done_fails(self):
         write(self.folder / 'ngram-r2.done.json', dict(samples=11))
         with self.assertRaisesRegex(ValueError, 'done count'):
