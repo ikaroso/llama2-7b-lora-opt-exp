@@ -63,8 +63,10 @@ def main():
     p.add_argument('--out', required=True)
     p.add_argument('--configs', required=True)
     p.add_argument('--repeat', type=int, default=3)
-    p.add_argument('--dataset', choices=['wikitext', 'cmrc'], default='wikitext')
+    p.add_argument('--dataset', choices=['wikitext', 'cmrc', 'specbench'], default='wikitext')
     a = p.parse_args()
+    if a.dataset == 'specbench' and (a.mode != 'server' or a.repeat != 1):
+        p.error('Spec-Bench uses server with --repeat 1 and five independent labels per method')
     out = ROOT / a.out
     out.mkdir(parents=True, exist_ok=False)
     configs = json.loads((ROOT / a.configs).read_text(encoding='utf-8'))
@@ -75,7 +77,11 @@ def main():
         input_tokens=512, output_tokens=256, ignore_eos=True,
         ttft='client time to first nonempty text SSE, excludes model loading; one warmup',
         dataset=a.dataset,
-        source=('https://github.com/ymcui/cmrc2018/blob/master/data/cmrc2018_dev.json' if a.dataset=='cmrc' else 'https://huggingface.co/datasets/ggml-org/ci/blob/main/wikitext-2-raw-v1.zip')))
+        input_builder_sha256=(hashlib.sha256((ROOT/'scripts/specbench_inputs.py').read_bytes()).hexdigest() if a.dataset=='specbench' else None),
+        source=({'cmrc':'https://github.com/ymcui/cmrc2018/blob/master/data/cmrc2018_dev.json',
+                 'specbench':'https://github.com/hemingkx/Spec-Bench/tree/fd2c1cd7d2201ef71db4c5f4e455008f017967bf',
+                 'wikitext':'https://huggingface.co/datasets/ggml-org/ci/blob/main/wikitext-2-raw-v1.zip'}[a.dataset])))
+    specbench_bundle = None
     for c in configs:
         label = c['label']
         print('START', label, flush=True)
@@ -111,12 +117,29 @@ def main():
                         time.sleep(1)
                 else:
                     raise TimeoutError('Server health timeout')
-                corpus_path = ROOT / ('data/cmrc2018_dev.json' if a.dataset=='cmrc' else 'data/wikitext-2-raw/wiki.test.raw')
+                corpus_path = ROOT / {'cmrc':'data/cmrc2018_dev.json', 'specbench':'data/spec-bench/question.jsonl',
+                                      'wikitext':'data/wikitext-2-raw/wiki.test.raw'}[a.dataset]
                 raw = corpus_path.read_bytes()
                 def tokenize(text, special=False):
                     with post(port,'tokenize',dict(content=text,add_special=special)) as response:
                         return json.load(response)['tokens']
-                if a.dataset=='cmrc':
+                if a.dataset=='specbench':
+                    from specbench_inputs import build_inputs
+                    lock = json.loads((ROOT/'bench/specbench-source.json').read_text())
+                    if hashlib.sha256(raw).hexdigest() != lock['question_sha256']:
+                        raise ValueError('Spec-Bench source checksum mismatch')
+                    if specbench_bundle is None:
+                        def detokenize(tokens):
+                            with post(port,'detokenize',dict(tokens=tokens)) as response:
+                                return json.load(response)['content']
+                        specbench_bundle = build_inputs(raw, tokenize, detokenize)
+                        write(out/'specbench-selection.json', specbench_bundle)
+                        write(out/'specbench-source.json', lock)
+                    prompts=specbench_bundle['tokens']
+                    offsets=specbench_bundle['offsets']
+                    warmup=specbench_bundle['warmup_tokens']
+                    warmup_offset=specbench_bundle['warmup_offset']
+                elif a.dataset=='cmrc':
                     prompts=[]
                     offsets=[]
                     suffix=tokenize('\n\n### Response:\n')
@@ -143,17 +166,18 @@ def main():
                     warmup_offset=65536
                 write(out / (label+'.prompts.json'), dict(corpus_sha256=hashlib.sha256(raw).hexdigest(), offsets=offsets, tokens=prompts, warmup_offset=warmup_offset))
                 stream(port, warmup)  # distinct excluded warmup
+                per_round = 12 if a.dataset=='specbench' else 3
                 with (out / (label+'.samples.jsonl')).open('x', encoding='utf-8') as dest:
                     for rep in range(a.repeat):
-                        for i in range(3):
-                            tokens = prompts[3*rep+i]
+                        for i in range(per_round):
+                            tokens = prompts[per_round*rep+i]
                             result = stream(port, tokens)
-                            dest.write(json.dumps(dict(repeat=rep, prompt=3*rep+i, **result), ensure_ascii=False)+'\n')
+                            dest.write(json.dumps(dict(repeat=rep, prompt=per_round*rep+i, **result), ensure_ascii=False)+'\n')
                             dest.flush()
                             print('SAMPLE', label, rep, i, round(result['ttft_seconds'],4), result['timings'], flush=True)
                 with urllib.request.urlopen(f'http://127.0.0.1:{port}/metrics') as response:
                     (out / (label+'.metrics.txt')).write_bytes(response.read())
-                write(out / (label+'.done.json'), dict(samples=3*a.repeat))
+                write(out / (label+'.done.json'), dict(samples=per_round*a.repeat))
             except Exception as exc:
                 write(out / (label+'.error.json'), dict(error=str(exc)))
                 print('ERROR', label, str(exc)[:300], flush=True)

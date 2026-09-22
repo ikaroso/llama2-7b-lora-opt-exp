@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/hemingkx/Spec-Bench",
+  "revision": "fd2c1cd7d2201ef71db4c5f4e455008f017967bf",
+  "question_url": "https://raw.githubusercontent.com/hemingkx/Spec-Bench/fd2c1cd7d2201ef71db4c5f4e455008f017967bf/data/spec_bench/question.jsonl",
+  "question_sha256": "4b6d33e79484f9841c487ee87d1cf6aa8c6066f61d5d482ff09e5a007fafdf04",
+  "per_task": 6,
+  "categories": [
+    "summarization",
+    "rag"
+  ],
+  "selection_seed": 42
+}

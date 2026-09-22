@@ -1,0 +1,147 @@
+[
+  {
+    "label": "reference-r1"
+  },
+  {
+    "label": "ngram-r1",
+    "extra": [
+      "--spec-type",
+      "ngram-simple",
+      "--spec-ngram-simple-size-n",
+      "12",
+      "--spec-ngram-simple-size-m",
+      "48",
+      "--spec-ngram-simple-min-hits",
+      "1"
+    ]
+  },
+  {
+    "label": "draft3-r1",
+    "extra": [
+      "--spec-type",
+      "draft-simple",
+      "-md",
+      "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf",
+      "-ngld",
+      "99",
+      "--spec-draft-n-max",
+      "3"
+    ]
+  },
+  {
+    "label": "ngram-r2",
+    "extra": [
+      "--spec-type",
+      "ngram-simple",
+      "--spec-ngram-simple-size-n",
+      "12",
+      "--spec-ngram-simple-size-m",
+      "48",
+      "--spec-ngram-simple-min-hits",
+      "1"
+    ]
+  },
+  {
+    "label": "draft3-r2",
+    "extra": [
+      "--spec-type",
+      "draft-simple",
+      "-md",
+      "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf",
+      "-ngld",
+      "99",
+      "--spec-draft-n-max",
+      "3"
+    ]
+  },
+  {
+    "label": "reference-r2"
+  },
+  {
+    "label": "draft3-r3",
+    "extra": [
+      "--spec-type",
+      "draft-simple",
+      "-md",
+      "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf",
+      "-ngld",
+      "99",
+      "--spec-draft-n-max",
+      "3"
+    ]
+  },
+  {
+    "label": "reference-r3"
+  },
+  {
+    "label": "ngram-r3",
+    "extra": [
+      "--spec-type",
+      "ngram-simple",
+      "--spec-ngram-simple-size-n",
+      "12",
+      "--spec-ngram-simple-size-m",
+      "48",
+      "--spec-ngram-simple-min-hits",
+      "1"
+    ]
+  },
+  {
+    "label": "reference-r4"
+  },
+  {
+    "label": "ngram-r4",
+    "extra": [
+      "--spec-type",
+      "ngram-simple",
+      "--spec-ngram-simple-size-n",
+      "12",
+      "--spec-ngram-simple-size-m",
+      "48",
+      "--spec-ngram-simple-min-hits",
+      "1"
+    ]
+  },
+  {
+    "label": "draft3-r4",
+    "extra": [
+      "--spec-type",
+      "draft-simple",
+      "-md",
+      "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf",
+      "-ngld",
+      "99",
+      "--spec-draft-n-max",
+      "3"
+    ]
+  },
+  {
+    "label": "ngram-r5",
+    "extra": [
+      "--spec-type",
+      "ngram-simple",
+      "--spec-ngram-simple-size-n",
+      "12",
+      "--spec-ngram-simple-size-m",
+      "48",
+      "--spec-ngram-simple-min-hits",
+      "1"
+    ]
+  },
+  {
+    "label": "draft3-r5",
+    "extra": [
+      "--spec-type",
+      "draft-simple",
+      "-md",
+      "models/draft-tinyllama/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf",
+      "-ngld",
+      "99",
+      "--spec-draft-n-max",
+      "3"
+    ]
+  },
+  {
+    "label": "reference-r5"
+  }
+]
