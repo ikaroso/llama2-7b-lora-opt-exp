@@ -6,7 +6,7 @@ GitHub 项目：llama2-7b-lora-opt-exp — Record how to optimize the inference 
 
 统一结论入口：**[推理优化总报告](docs/final-report.md)**，涵盖 BF16 原始基线、量化、GPU 部署、投机解码、五轮结果与未完成项。逐轮日志索引和复现入口均在报告末尾。
 
-最新补测：[Spec-Bench 摘要/RAG 子集结果](docs/specbench-results.md)，12 条真实输入、三方法各五轮，固定512/256，包含分类收益、接受率与输出差异。
+最新补测：[Spec-Bench BF16 纯 CPU 与 Q4 对比](docs/specbench-bf16-results.md)，12 条真实输入、四配置各五轮，共240条正式请求，固定512/256。包含 BF16 原始基线、整体部署收益、投机收益及输出差异；[前一批三组 Q4 结果](docs/specbench-results.md)另行保留。
 
 当前已定：Llama 2 7B Base 的 `modelscope/Llama-2-7b-ms` 镜像 + `iamshnoo/alpaca-2-7b-chinese`，已有合并 BF16 和本地 Q4_K_M 产物及真实推理记录。镜像配置和 tokenizer 已核对；镜像与官方权重逐字节一致性尚未证明。最新下载说明见运行手册，环境与验收进度见 [状态记录](docs/status.md)。
 

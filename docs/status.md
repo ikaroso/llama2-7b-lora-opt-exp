@@ -2,6 +2,12 @@
 
 当前结论统一见 [推理优化总报告](final-report.md)。以下按日期保留阶段记录，旧记录中的“基准”须结合当时配置理解。
 
+## Spec-Bench BF16 CPU 基线完成并留档（2026-09-23）
+
+实验于 9 月 22 日 15:55 结束：Merge BF16 纯 CPU、Q4 GPU 无投机、ngram、TinyLlama draft3 各五轮，共 240 条正式请求，无失败。全部记录已校验 512/256、零缓存、完整 SSE 和相同输入；20 份提示与上批一致。运行前模型哈希复核通过，15 项相关测试通过。
+
+BF16 CPU 的 prefill/decode/TTFT 为 23.02 token/s、4.28 token/s、22.38 秒。三组 Q4 的 decode 分别为 50.27、84.81、75.35 token/s，达到同轮 BF16 CPU 的 11.76、19.84、17.63 倍，属于整体部署收益。本批投机 decode 收益为 +68.7% / +49.9%，不混用上批倍率。正式质量/PPL 仍未完成。见 [结果](specbench-bf16-results.md)、[协议](specbench-bf16.md)。
+
 ## Spec-Bench 子集补测完成（2026-09-22）
 
 按用户确认保持512/256，固定抽取 Spec-Bench 摘要与 RAG 各六题，对 Q4 GPU 无投机、ngram-simple、TinyLlama draft3 完成五轮，共180正式请求。所有输入一致、零提示缓存、长度检查通过，未出现失败；原始日志位于 results/specbench-20260922。协议/汇总代码共12项测试通过，目标与草稿完整哈希复核一致。

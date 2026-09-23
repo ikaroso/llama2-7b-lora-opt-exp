@@ -2,6 +2,8 @@
 
 本轮把投机评测从三个 CMRC2018 问题扩展到 Spec-Bench 的摘要与 RAG 两类，每类六个不同样本。原始 BF16 基线定义不变；此次只比较相同 Q4 GPU 目标的无投机、ngram-simple 和 TinyLlama draft3，隔离投机的额外效果。
 
+后续已完成同一子集的 BF16 纯 CPU 基线与同批 Q4 复测，见 [补测协议](specbench-bf16.md) 和 [四组五轮结果](specbench-bf16-results.md)。本页原先三组 Q4 实验独立保留。
+
 ## 数据与取样
 
 - 上游：[hemingkx/Spec-Bench](https://github.com/hemingkx/Spec-Bench)，固定提交 `fd2c1cd7d2201ef71db4c5f4e455008f017967bf`，文件 `data/spec_bench/question.jsonl`，SHA256 `4b6d33e79484f9841c487ee87d1cf6aa8c6066f61d5d482ff09e5a007fafdf04`。仓库许可及原评测代码存于本地 `data/spec-bench/`；数据来源、再分发条件遵循各原数据集，本仓库只提交协议及索引。

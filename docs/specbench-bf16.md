@@ -25,4 +25,6 @@ python scripts/report_specbench.py --folder results/specbench-bf16-20260922 --ou
 
 ## 状态
 
-2026-09-22：已启动五轮补测，尚未产生最终结果。完成后更新本节、结果报告和总报告；不以预热或部分轮次代替最终确认。
+2026-09-22 15:55（本地时间）：四配置各五轮全部完成，无错误记录。2026-09-23 汇总校验确认 240 条正式请求均为 512/256、零提示缓存；20 份输入文件与原批次完全一致，BF16 每轮命令均满足纯 CPU 参数约束。相关代码的 15 项测试已在运行期间通过。
+
+结果见 [完整对比表](specbench-bf16-results.md) 与 [结构化结果](../bench/specbench-bf16-results-20260922.json)。BF16 CPU 五轮平均 prefill 23.02 token/s、decode 4.28 token/s、TTFT 22.38 秒；同批 Q4 GPU 无投机 decode 为 50.27 token/s，按同轮比值汇总达到 BF16 CPU 的 11.76 倍。全部原始文件哈希、分类/逐轮/逐题结果已留档；没有重跑或覆盖此前批次。
